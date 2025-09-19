@@ -4,17 +4,17 @@ import { RiChatCheckLine } from "react-icons/ri";
 import { FaHandHoldingHeart } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
 import { BiBook } from "react-icons/bi";
-import bot from "../assets/bot.png"
-import redLight from "../assets/redLight.png"
-import banner from "../assets/banner.png"
-import logo from "../assets/logo.png"
-import Offer from "../assets/Offer.png"
-import clip_path_group from "../assets/clip_path_group.png"
-import calling_girl from "../assets/calling_girl.png"
-import repair_man from "../assets/repair_man.png"
-import Group1 from "../assets/Group_1.png"
+import bot from "../assets/homepage/bot.png"
+import redLight from "../assets/homepage/redLight.png"
+import banner from "../assets/homepage/banner.png"
+import logo from "../assets/homepage/logo.png"
+import Offer from "../assets/homepage/Offer.png"
+import clip_path_group from "../assets/homepage/clip_path_group.png"
+import calling_girl from "../assets/homepage/calling_girl.png"
+import repair_man from "../assets/homepage/repair_man.png"
+import Group1 from "../assets/homepage/Group_1.png"
 import { FaLeaf } from "react-icons/fa";
-import homepage from "../assets/homepage.png"
+import homepage from "../assets/homepage/homepage.png"
 import { FaFacebook, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 export const icons = {
