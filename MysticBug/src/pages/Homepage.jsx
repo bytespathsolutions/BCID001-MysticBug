@@ -4,7 +4,7 @@ import { icons } from "../assets/assets"
 const Homepage = () => {
   return (
     <div className="max-w-[1440px] mx-auto min-h-screen sm:px-15 sm:py-2.5 ">
-      <Banner />
+      <Banner src={images.homepage} />
       {/* chatbot section */}
       <div className="px-4 sm:px-8 md:px-12 lg:px-16 py-6 sm:py-8 pb-20 sm:pb-28 relative">
         <div className="bg-gradient-to-r from-blue-100 to-white rounded-xl sm:rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 p-4 sm:p-6 md:p-8">

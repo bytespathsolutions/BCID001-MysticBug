@@ -1,6 +1,6 @@
 import { images } from "../assets/assets";
 
-const Banner = () => {
+const Banner = ({ src, text = "", para = "" }) => {
   return (
     <div className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[660px] overflow-visible">
       {/* SVG - Hidden on small screens */}
@@ -37,13 +37,19 @@ const Banner = () => {
       />
 
       {/* Homepage Image - Responsive positioning */}
-      <div className="relative flex justify-center items-center h-full pt-8 sm:pt-12 md:pt-20 lg:pt-24">
+      <div className="relative flex justify-center items-center h-full pt-8 sm:pt-12 md:pt-10">
         <img
-          src={images.homepage}
+          src={src}
           alt="homepage"
           className="relative z-20 w-full max-w-[500px] md:max-w-[600px] lg:max-w-[700px] h-auto object-contain"
         />
       </div>
+      <h1 className="absolute left-1/2 transform -translate-x-1/2 -translate-y-[20px] text-white font-semibold text-3xl">
+        {text}
+      </h1>
+      <p className="mt-5 md:mt-10 text-center text-gray-300 md:text-black font-normal text-base pb-4">
+        {para}
+      </p>
 
       {/* Simple background for small screens */}
       <div className="md:hidden absolute inset-0 bg-gradient-to-b from-[#008287] to-[#005B5F] -z-10"></div>
