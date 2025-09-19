@@ -23,6 +23,9 @@ import office from "../assets/ContactPage/office.png"
 import { CiLocationOn } from "react-icons/ci";
 import { IoCallOutline } from "react-icons/io5";
 import mobile from "../assets/ContactPage/mobile.png"
+import Who_are_we from "../assets/Aboutus/Who_are_we.png"
+import clip_path_vertical from "../assets/Aboutus/clip_path_vertical.png"
+import owner from "../assets/Aboutus/owner.png"
 export const icons = {
   FaRegClock,
   LuTablet,
@@ -41,5 +44,5 @@ export const icons = {
 export const images = {
   bot, redLight, banner, Offer, logo, clip_path_group, calling_girl, repair_man, Group1, homepage
   ,
-  calling_1, mail, office, mobile
+  calling_1, mail, office, mobile, Who_are_we, clip_path_vertical, owner
 }
