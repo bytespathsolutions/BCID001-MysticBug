@@ -3,14 +3,14 @@ import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { images } from "../assets/assets";
-
+import { useNavigate } from "react-router-dom"
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-
+  const navigate = useNavigate()
   return (
     <header className="max-w-[1320px] h-19 mx-auto flex items-center justify-between px-4 sm:px-7.5 py-3 relative text-white">
       {/* Logo */}
-      <div className="flex items-center justify-center gap-3 w-[144px] h-[55px]">
+      <div onClick={() => navigate('/')} className="flex items-center justify-center gap-3 w-[144px] h-[55px]">
         <img src={images.logo} alt="MediH Logo" className="h-10" />
       </div>
 
