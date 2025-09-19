@@ -16,7 +16,13 @@ import Group1 from "../assets/homepage/Group_1.png"
 import { FaLeaf } from "react-icons/fa";
 import homepage from "../assets/homepage/homepage.png"
 import { FaFacebook, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
-
+import calling_1 from "../assets/ContactPage/calling_1.png"
+import { MdOutlineMail } from "react-icons/md";
+import mail from "../assets/ContactPage/mail.png"
+import office from "../assets/ContactPage/office.png"
+import { CiLocationOn } from "react-icons/ci";
+import { IoCallOutline } from "react-icons/io5";
+import mobile from "../assets/ContactPage/mobile.png"
 export const icons = {
   FaRegClock,
   LuTablet,
@@ -28,8 +34,12 @@ export const icons = {
   FaInstagram,
   FaLinkedinIn,
   FaTwitter,
-  FaLeaf
+  FaLeaf,
+  MdOutlineMail, CiLocationOn
+  , IoCallOutline
 }
 export const images = {
   bot, redLight, banner, Offer, logo, clip_path_group, calling_girl, repair_man, Group1, homepage
+  ,
+  calling_1, mail, office, mobile
 }
