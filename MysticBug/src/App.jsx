@@ -4,6 +4,7 @@ import Footer from "./components/Footer"
 import Navbar from "./components/Navbar"
 import NotFound from "./components/NotFound"
 import ContactUs from "./pages/ContactUs"
+import Aboutus from "./pages/Aboutus"
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/aboutus" element={<Aboutus />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
