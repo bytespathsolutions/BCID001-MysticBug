@@ -13,9 +13,9 @@ import clip_path_group from "../assets/clip_path_group.png"
 import calling_girl from "../assets/calling_girl.png"
 import repair_man from "../assets/repair_man.png"
 import Group1 from "../assets/Group_1.png"
+import { FaLeaf } from "react-icons/fa";
 import homepage from "../assets/homepage.png"
-
-
+import { FaFacebook, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 export const icons = {
   FaRegClock,
@@ -23,7 +23,12 @@ export const icons = {
   RiChatCheckLine,
   FaHandHoldingHeart,
   FiHome,
-  BiBook
+  BiBook,
+  FaFacebook,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+  FaLeaf
 }
 export const images = {
   bot, redLight, banner, Offer, logo, clip_path_group, calling_girl, repair_man, Group1, homepage
