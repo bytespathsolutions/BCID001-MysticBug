@@ -13,7 +13,7 @@ const Footer = () => {
           <img src={images.logo} alt="logo" className="h-auto w-32 md:w-52" />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-15 md:ml-70 ">
+        <div className="flex flex-col md:flex-row gap-15 md:ml-130 relative z-20">
           <div className="flex flex-col gap-3">
             <h1 className="text-lg font-medium text-gray-900">Quick Links</h1>
             <Link className="cursor-pointer hover:underline hover:text-[#008287] transition-colors" to="/aboutus">About Us</Link>
@@ -50,7 +50,7 @@ const Footer = () => {
 
       <hr className="my-5" />
 
-      <div className="w-full flex flex-col md:flex-row items-center justify-between text-center text-sm text-gray-700 gap-3">
+      <div className="w-full flex flex-col md:flex-row items-center justify-between text-center text-sm text-gray-700 gap-3 relative z-20">
         <div className="space-x-5">
           <Link className="cursor-pointer underline hover:text-[#008287] transition-colors" to="/terms">Terms of Service</Link>
           <Link className="cursor-pointer underline hover:text-[#008287] transition-colors" to="/cookies">Cookies Settings</Link>
