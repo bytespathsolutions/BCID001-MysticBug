@@ -13,7 +13,7 @@ const Footer = () => {
           <img src={images.logo} alt="logo" className="h-auto w-32 md:w-52" />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-10 md:ml-20 lg:ml-32">
+        <div className="flex flex-col md:flex-row gap-15 md:ml-70 ">
           <div className="flex flex-col gap-3">
             <h1 className="text-lg font-medium text-gray-900">Quick Links</h1>
             <Link className="cursor-pointer hover:underline hover:text-[#008287] transition-colors" to="/aboutus">About Us</Link>
