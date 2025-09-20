@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar"
 import NotFound from "./components/NotFound"
 import ContactUs from "./pages/ContactUs"
 import Aboutus from "./pages/Aboutus"
+import Terms from "./pages/Terms"
+import PrivacyPolicy from "./pages/PrivacyPolicy"
 
 const App = () => {
   return (
@@ -16,6 +18,8 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/aboutus" element={<Aboutus />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

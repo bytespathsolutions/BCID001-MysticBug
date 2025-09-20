@@ -26,6 +26,10 @@ import mobile from "../assets/ContactPage/mobile.png"
 import Who_are_we from "../assets/Aboutus/Who_are_we.png"
 import clip_path_vertical from "../assets/Aboutus/clip_path_vertical.png"
 import owner from "../assets/Aboutus/owner.png"
+import terms from "../assets/Terms/terms.png"
+import stones_left from "../assets/Terms/stones-left.png"
+import stones_right from "../assets/Terms/stones-right.png"
+import privacyPolicy from "../assets/privacy-policy/privacyPolicy.png"
 export const icons = {
   FaRegClock,
   LuTablet,
@@ -44,5 +48,5 @@ export const icons = {
 export const images = {
   bot, redLight, banner, Offer, logo, clip_path_group, calling_girl, repair_man, Group1, homepage
   ,
-  calling_1, mail, office, mobile, Who_are_we, clip_path_vertical, owner
+  calling_1, mail, office, mobile, Who_are_we, clip_path_vertical, owner, terms, stones_left, stones_right, privacyPolicy
 }
