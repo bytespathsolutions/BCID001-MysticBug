@@ -3,10 +3,10 @@ import { images } from '../assets/assets'
 import { icons } from "../assets/assets"
 const Homepage = () => {
   return (
-    <div className="max-w-[1440px] mx-auto min-h-screen sm:px-15 sm:py-2.5 ">
+    <div>
       <Banner src={images.homepage} />
       {/* chatbot section */}
-      <div className="px-4 sm:px-8 md:px-12 lg:px-16 py-6 sm:py-8 pb-20 sm:pb-28 relative">
+      <div className="px-4 sm:px-12 py-6 sm:py-8 relative">
         <div className="bg-gradient-to-r from-blue-100 to-white rounded-xl sm:rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 p-4 sm:p-6 md:p-8">
 
           {/* Left Section */}
@@ -83,7 +83,7 @@ const Homepage = () => {
         </div>
       </div>
       {/* medical emergency section */}
-      <div className="px-4 sm:px-8 md:px-12 lg:px-16 py-6 sm:py-8 pb-20 sm:pb-28 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <div className="px-4 sm:px-12 py-6 sm:py-8 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
 
         {/* Left Section - Text Content */}
         <div className='flex-1 w-full min-w-0 p-4 sm:p-6 lg:p-8 bg-gradient-to-r from-[#FFEEC3] to-transparent rounded-xl lg:rounded-2xl'>
@@ -158,7 +158,7 @@ const Homepage = () => {
 
       </div>
       {/* know more section */}
-      <div className="px-4 md:px-12 lg:px-16 py-8 pb-20">
+      <div className="px-4 sm:px-12 py-6 sm:py-8">
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <h1 className="font-serif font-normal text-3xl md:text-4xl lg:text-5xl leading-tight md:leading-[120%] tracking-[-0.5px]">
             Know More, Worry Less.
@@ -193,7 +193,7 @@ const Homepage = () => {
         />
       </div>
       {/* healthcare needs section */}
-      <div className="px-4 sm:px-8 md:px-10 py-8 pb-28 ">
+      <div className="px-4 sm:px-12 py-6 sm:py-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between items-start gap-8">
           {/* Image */}
           <div className="flex-shrink-0 flex-1 flex items-center">
@@ -250,10 +250,10 @@ const Homepage = () => {
       </div>
 
       {/* instant help section */}
-      <div className="relative h-full min-h-screen w-full rounded-2xl overflow-auto p-4 pb-10">
+      <div className="relative h-full min-h-screen w-full rounded-2xl overflow-auto">
 
         {/* Purple Card - Top Left */}
-        <div className="bg-gradient-to-r from-[#C8C9FF] to-[#9EC6FF] max-w-md rounded-2xl p-6 shadow-lg mb-12">
+        <div className="bg-gradient-to-r from-[#C8C9FF] md:ml-15 max-w-md rounded-l-2xl p-6">
           <h1 className="text-2xl font-medium">Instant Help,<br />One Tap Away.</h1>
           <p className="mt-2 text-sm">
             Emergencies don't wait — and neither should you. With MediH's Panic Button, immediate assistance is just a tap away. Alerts nearby medical professionals and dispatches help quickly.
@@ -269,17 +269,17 @@ const Homepage = () => {
           <img
             src={images.calling_girl}
             alt="calling girl"
-            className="absolute top-[-73px] md:top-[-112px] right-[0px] w-85 h-85 object-cover"
+            className="absolute top-[-73px] md:top-[-12px] right-[70px] w-85 h-85 object-cover"
           />
 
           <img
             src={images.repair_man}
             alt="repair man"
-            className="hidden md:block absolute bottom-0 left-[40px] w-85 h-85 object-cover z-10"
+            className="hidden md:block absolute bottom-10 left-[120px] w-85 h-85 object-cover z-10"
           />
         </div>
 
-        <div className="absolute bottom-[-10px] right-10 md:bottom-15 md:right-0 bg-gradient-to-r from-[#FFEEC3] to-[#EDFF9E] max-w-md rounded-2xl p-6 shadow-lg">
+        <div className="absolute bottom-[-10px] right-10 md:bottom-15 md:right-10 bg-gradient-to-r from-[#FFEEC3] max-w-md rounded-l-2xl p-6">
           <h1 className="text-2xl font-medium">Your 24/7 Health <br />Companion.</h1>
           <p className="mt-2 text-sm text-gray-800">
             Got symptoms at 2AM? Meet MediH’s AI-powered chatbot — your always-on health assistant. Understand concerns, get next steps, and connect to doctors in real-time.

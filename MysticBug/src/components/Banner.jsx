@@ -2,7 +2,7 @@ import { images } from "../assets/assets";
 
 const Banner = ({ src, text = "", para = "" }) => {
   return (
-    <div className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[660px] overflow-visible">
+    <div className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] overflow-visible">
       {/* SVG - Hidden on small screens */}
       <svg
         className="hidden md:block absolute top-0 left-0 w-full h-[500px] md:h-[600px]"

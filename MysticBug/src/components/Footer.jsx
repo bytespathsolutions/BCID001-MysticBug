@@ -5,34 +5,35 @@ import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
   const navigate = useNavigate();
+
   return (
-    <div className="relative px-5 py-8 bg-white">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:justify-start items-center text-center md:text-left gap-8">
-        <div onClick={() => { navigate('/'); window.scrollTo(0, 0) }} className="flex justify-center items-center">
+    <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-8 bg-white">
+      <div className="w-full flex flex-col md:flex-row md:justify-start items-center text-center md:text-left gap-8">
+        <div onClick={() => { navigate('/'); window.scrollTo(0, 0) }} className="flex justify-center items-center cursor-pointer">
           <img src={images.logo} alt="logo" className="h-auto w-32 md:w-52" />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-10 md:ml-100">
+        <div className="flex flex-col md:flex-row gap-10 md:ml-20 lg:ml-32">
           <div className="flex flex-col gap-3">
             <h1 className="text-lg font-medium text-gray-900">Quick Links</h1>
-            <Link className="cursor-pointer hover:underline" to="/aboutus">About Us</Link>
-            <Link className="cursor-pointer hover:underline" to="/disease">Disease</Link>
-            <Link className="cursor-pointer hover:underline" to="/emergency">Emergency</Link>
-            <Link className="cursor-pointer hover:underline" to="/contactus">Contact Us</Link>
+            <Link className="cursor-pointer hover:underline hover:text-[#008287] transition-colors" to="/aboutus">About Us</Link>
+            <Link className="cursor-pointer hover:underline hover:text-[#008287] transition-colors" to="/disease">Disease</Link>
+            <Link className="cursor-pointer hover:underline hover:text-[#008287] transition-colors" to="/emergency">Emergency</Link>
+            <Link className="cursor-pointer hover:underline hover:text-[#008287] transition-colors" to="/contactus">Contact Us</Link>
           </div>
 
           <div className="flex flex-col gap-3">
             <h1 className="text-lg font-medium text-gray-900">Follow Us</h1>
-            <span className="flex items-center gap-2 cursor-pointer">
+            <span className="flex items-center gap-2 cursor-pointer hover:text-[#008287] transition-colors">
               <icons.FaFacebook /> Facebook
             </span>
-            <span className="flex items-center gap-2 cursor-pointer">
+            <span className="flex items-center gap-2 cursor-pointer hover:text-[#008287] transition-colors">
               <icons.FaInstagram /> Instagram
             </span>
-            <span className="flex items-center gap-2 cursor-pointer">
+            <span className="flex items-center gap-2 cursor-pointer hover:text-[#008287] transition-colors">
               <icons.FaTwitter /> X
             </span>
-            <span className="flex items-center gap-2 cursor-pointer">
+            <span className="flex items-center gap-2 cursor-pointer hover:text-[#008287] transition-colors">
               <icons.FaLinkedinIn /> Linkedin
             </span>
           </div>
@@ -49,15 +50,15 @@ const Footer = () => {
 
       <hr className="my-5" />
 
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between text-center text-sm text-gray-700 gap-3">
+      <div className="w-full flex flex-col md:flex-row items-center justify-between text-center text-sm text-gray-700 gap-3">
         <div className="space-x-5">
-          <Link className="cursor-pointer underline" to="/terms">Terms of Service</Link>
-          <Link className="cursor-pointer underline" to="/cookies">Cookies Settings</Link>
-          <Link className="cursor-pointer underline" to="/privacy">Privacy Policy</Link>
+          <Link className="cursor-pointer underline hover:text-[#008287] transition-colors" to="/terms">Terms of Service</Link>
+          <Link className="cursor-pointer underline hover:text-[#008287] transition-colors" to="/cookies">Cookies Settings</Link>
+          <Link className="cursor-pointer underline hover:text-[#008287] transition-colors" to="/privacy">Privacy Policy</Link>
         </div>
         <span>&copy; 2025 MediH. All rights reserved.</span>
       </div>
-    </div >
+    </div>
   );
 };
 

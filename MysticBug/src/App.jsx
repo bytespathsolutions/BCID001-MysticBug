@@ -8,15 +8,20 @@ import Aboutus from "./pages/Aboutus"
 
 const App = () => {
   return (
-    <div className="max-w-[1440px] mx-auto min-h-screen sm:px-15 sm:py-2.5 ">
-      <Navbar />
+    <div className="w-full min-h-screen">
+      <div className="max-w-[1440px] mx-auto">
+        <Navbar />
+      </div>
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+
+      <div className="max-w-[1440px] mx-auto">
+        <Footer />
+      </div>
     </div>
   )
 }
