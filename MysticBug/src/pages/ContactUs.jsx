@@ -3,7 +3,7 @@ import { images, icons } from "../assets/assets";
 
 const ContactUs = () => {
   return (
-    <div className="md:px-12 md:mb-12">
+    <div>
       {/* Banner */}
       <Banner
         src={images.calling_1}
