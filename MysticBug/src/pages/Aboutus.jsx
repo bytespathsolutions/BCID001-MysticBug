@@ -5,7 +5,7 @@ import { FaCube } from "react-icons/fa";
 const Aboutus = () => {
   return (
     <div>
-      <div className="relative w-full min-h-screen overflow-visible">
+      <div className="relative w-full min-h-screen">
         {/* SVG - Hidden on small screens */}
         <svg
           className="hidden md:block absolute top-0 left-0 w-full h-[500px] md:h-[600px]"
@@ -31,7 +31,7 @@ const Aboutus = () => {
           alt="Banner Clip"
           className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-full h-auto"
           style={{
-            top: "150px",
+            top: "135px",
             height: "600px",
             objectFit: "cover",
             objectPosition: "center top",
@@ -97,7 +97,7 @@ const Aboutus = () => {
         className="relative w-full bg-no-repeat bg-center bg-contain"
         style={{ backgroundImage: `url(${images.clip_path_vertical})` }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-24 md:py-32 grid gap-y-24">
+        <div className="max-w-7xl px-4 md:px-12 py-24 md:py-32 grid gap-y-24">
 
           {/* Row 1: Image (left) + Card (right) */}
           <div className="grid grid-cols-1 md:grid-cols-5 items-start gap-x-12">
@@ -111,7 +111,7 @@ const Aboutus = () => {
             </div>
 
             {/* Card right (larger) */}
-            <div className="relative z-10 bg-gradient-to-r from-[#e4e5ff] to-[#f7f9ff] rounded-l-2xl p-8 md:p-12 md:col-span-3 shadow-md">
+            <div className="relative z-10 bg-gradient-to-r from-[#e4e5ff] to-[#f7f9ff] rounded-l-2xl p-8 md:p-12 md:col-span-3 ">
               <p className="text-md md:text-lg text-black">Our Founder</p>
               <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-gray-900">Founder Name Here</h2>
               <p className="mt-4 text-gray-700 leading-relaxed">
@@ -133,7 +133,7 @@ const Aboutus = () => {
           {/* Row 2: Card (left) + Image (right) */}
           <div className="grid grid-cols-1 md:grid-cols-5 items-start gap-x-12">
             {/* Card left (larger) */}
-            <div className="relative z-10 bg-gradient-to-r from-[#e4e5ff] to-[#f7f9ff] rounded-l-2xl p-8 md:p-12 md:col-span-3 shadow-md">
+            <div className="relative z-10 bg-gradient-to-r from-[#e4e5ff] to-[#f7f9ff] rounded-l-2xl p-8 md:p-12 md:col-span-3">
               <p className="text-md md:text-lg text-black">Our Founder</p>
               <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-gray-900">Founder Name Here</h2>
               <p className="mt-4 text-gray-700 leading-relaxed">
@@ -164,9 +164,8 @@ const Aboutus = () => {
       </section>
 
 
-      <section className="w-full flex justify-center px-4 md:px-12 py-6">
-        <div className="w-full max-w-6xl bg-gradient-to-r from-yellow-100 to-[#f9f9f3] rounded-3xl p-6 md:p-10 shadow-sm">
-
+      <section className="w-full px-4 md:px-10 py-6">
+        <div className="w-full max-w-6xl bg-gradient-to-r from-yellow-100 rounded-l-3xl p-4 md:p-6">
           {/* Heading */}
           <p className="text-xl font-medium text-black mb-2">Our values</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-black mb-4">Company Values</h2>
