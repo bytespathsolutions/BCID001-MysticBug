@@ -8,16 +8,16 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate()
   return (
-    <header className="max-w-[1320px] h-19 mx-auto flex items-center justify-between px-4 sm:px-7.5 py-3 relative text-white">
+    <header className="fixed top-0 left-0 right-0 w-full h-19 text-white flex items-center justify-between px-4 sm:px-7.5 py-3 z-50 bg-white shadow-md">
       {/* Logo */}
-      <div onClick={() => navigate('/')} className="flex items-center justify-center gap-3 w-[144px] h-[55px]">
+      <div onClick={() => navigate('/')} className="flex items-center justify-center gap-3 w-[144px] h-[55px] cursor-pointer">
         <img src={images.logo} alt="MediH Logo" className="h-10" />
       </div>
 
       {/* Desktop Nav   */}
       <div className="hidden md:flex items-center justify-between gap-6 flex-1">
         {/* Search */}
-        <div className="hidden lg:flex items-center w-[614px] h-[44px] bg-[#a7d6de] rounded-full overflow-hidden">
+        <div className="hidden lg:flex items-center w-[614px] h-[44px] bg-[#93c3d8] rounded-full overflow-hidden">
           <select className="bg-[#00424f] text-gray-300 px-3 h-full border-none outline-none">
             <option>Search</option>
           </select>
@@ -62,7 +62,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {showMenu && (
-        <nav className="absolute top-[70px] left-0 w-full bg-white shadow-md flex flex-col items-start gap-4 px-6 py-4 lg:hidden z-50">
+        <nav className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start gap-4 px-6 py-4 lg:hidden z-50">
           <a onClick={() => setShowMenu(!showMenu)} href="/aboutus" className="text-[16px] text-[#000000]">About Us</a>
           <a onClick={() => setShowMenu(!showMenu)} href="/emergency" className="text-[16px] text-[#000000]">Emergency</a>
           <a onClick={() => setShowMenu(!showMenu)} href="/diseases" className="text-[16px] text-[#000000]">Diseases</a>
