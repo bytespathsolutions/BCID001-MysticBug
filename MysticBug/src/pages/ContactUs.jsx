@@ -13,7 +13,7 @@ const ContactUs = () => {
         }
       />
       {/* Email Section */}
-      <div className="relative flex flex-col md:flex-row md:justify-between md:items-center  md:px-10 px-4 py-6 gap-6">
+      <div className="relative flex flex-col md:flex-row md:justify-between md:items-center  md:px-20 px-4 py-6 gap-6">
         <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 w-full rounded-lg max-w-lg p-4 shadow-sm z-10 relative">
           <icons.MdOutlineMail className="size-10 font-medium mb-3" />
           <h1 className="font-semibold text-lg mb-2">Email</h1>
@@ -38,7 +38,7 @@ const ContactUs = () => {
         </div>
       </div>
       {/* Office Section */}
-      <div className="relative flex flex-col md:flex-row md:justify-between md:items-center md:px-10 px-4 py-6 gap-6">
+      <div className="relative flex flex-col md:flex-row md:justify-between md:items-center md:px-20 px-4 py-6 gap-6">
         <div className="relative w-full max-w-[470px] mx-auto md:mx-0">
           <div className="hidden absolute inset-0 md:flex items-center justify-center -z-10">
             <div className="h-72 w-72 rounded-full bg-[#005B5F] blur-[120px] opacity-70"></div>
@@ -66,7 +66,7 @@ const ContactUs = () => {
 
 
       {/* Phone Section */}
-      <div className="relative flex flex-col md:flex-row md:justify-between md:items-center md:px-10 px-4 py-6 gap-6">
+      <div className="relative flex flex-col md:flex-row md:justify-between md:items-center md:px-20 px-4 py-6 gap-6">
         <div className="bg-gradient-to-r from-purple-100 to-purple-50 w-full rounded-lg max-w-xl p-4 shadow-sm z-10 relative">
           <icons.IoCallOutline className="size-10 font-medium mb-3" />
           <h1 className="font-semibold text-lg mb-2">Phone</h1>

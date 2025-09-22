@@ -1,13 +1,12 @@
-import { icons } from "../assets/assets";
-import { images } from "../assets/assets";
-import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-
+import { images } from '../assets/assets';
+import { Link } from 'react-router-dom';
+import { icons } from '../assets/assets';
 const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-8 bg-white">
+    <div className="relative w-full px-4 sm:px-16 py-8 bg-white">
       <div className="w-full flex flex-col md:flex-row md:justify-start items-center text-center md:text-left gap-8">
         <div onClick={() => { navigate('/'); window.scrollTo(0, 0) }} className="flex justify-center items-center cursor-pointer">
           <img src={images.logo} alt="logo" className="h-auto w-32 md:w-52" />
@@ -62,4 +61,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Footer

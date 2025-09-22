@@ -1,11 +1,11 @@
-import { FaLeaf } from "react-icons/fa"
-import { images } from "../assets/assets"
-import { FaCube } from "react-icons/fa";
+import { FaLeaf, FaCube } from "react-icons/fa";
+import { images } from "../assets/assets";
 
 const Aboutus = () => {
   return (
     <div>
-      <div className="relative w-full min-h-screen">
+      {/* Hero Section */}
+      <div className="relative w-full min-h-screen px-4 sm:px-16">
         {/* SVG - Hidden on small screens */}
         <svg
           className="hidden md:block absolute top-0 left-0 w-full h-[500px] md:h-[600px]"
@@ -25,7 +25,7 @@ const Aboutus = () => {
           </defs>
         </svg>
 
-        {/* Clip Path Image - Hidden on small screens */}
+        {/* Clip Path Image */}
         <img
           src={images.clip_path_group}
           alt="Banner Clip"
@@ -39,10 +39,10 @@ const Aboutus = () => {
           }}
         />
 
-        {/* Simple background for small screens */}
+        {/* Mobile Background */}
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-[#008287] to-[#005B5F] -z-10"></div>
 
-        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-center px-4">
+        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-center px-4 sm:px-16">
           <h1 className="text-4xl font-semibold text-white mb-4">
             MediH Mission Statement
           </h1>
@@ -52,8 +52,10 @@ const Aboutus = () => {
         </div>
       </div>
 
-      <section className="mt-5 md:mt-[-60px] w-full rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-10">
-        <div className="flex-1 text-left max-w-3xl space-y-4 bg-gradient-to-r from-[#fff8ee] p-6">
+      {/* About Section */}
+      <section className="mt-5 md:mt-[-60px] w-full rounded-3xl flex flex-col md:flex-row md:justify-between gap-10 px-4 sm:px-16 py-8">
+        {/* Left Text */}
+        <div className="text-left max-w-3xl space-y-4 bg-gradient-to-r from-[#fff8ee] p-6 rounded-xl">
           <div className="text-teal-800 font-medium text-sm md:text-base flex flex-wrap gap-2">
             <span className="flex items-center gap-2">Health <FaLeaf /></span>
             <span className="flex items-center gap-2">Care <FaLeaf /></span>
@@ -84,34 +86,33 @@ const Aboutus = () => {
             arcu, tincidunt ultrices pellentesque.
           </p>
         </div>
-        <div className="flex-1 flex justify-center items-center">
+
+        {/* Right Image */}
+        <div className="flex justify-center items-center">
           <img
             src={images.Who_are_we}
             alt="About MediH"
-            className="md:w-[450px] w-[400px] object-cover"
+            className="md:w-[450px] w-full max-w-[400px] object-cover rounded-xl"
           />
         </div>
       </section>
-      {/* founder section */}
+
+      {/* Founder Section */}
       <section
-        className="relative w-full bg-no-repeat bg-center bg-contain"
+        className="relative w-full bg-no-repeat bg-center bg-contain px-4 sm:px-16 py-24"
         style={{ backgroundImage: `url(${images.clip_path_vertical})` }}
       >
-        <div className="max-w-7xl px-4 md:px-12 py-24 md:py-32 grid gap-y-24">
-
-          {/* Row 1: Image (left) + Card (right) */}
-          <div className="grid grid-cols-1 md:grid-cols-5 items-start gap-x-12">
-            {/* Image left */}
-            <div className="flex justify-start md:col-span-2">
+        <div className="py-24 flex flex-col gap-y-24">
+          <div className="flex flex-col md:flex-row md:justify-between items-start gap-8 md:gap-12">
+            <div className="md:w-[45%] flex justify-start">
               <img
                 src={images.owner}
                 alt="Founder"
-                className="w-full max-w-[500px] h-[420px] md:h-[470px] object-cover rounded-md"
+                className="w-full h-[420px] md:h-[470px] object-contain rounded-md"
               />
             </div>
 
-            {/* Card right (larger) */}
-            <div className="relative z-10 bg-gradient-to-r from-[#e4e5ff] to-[#f7f9ff] rounded-l-2xl p-8 md:p-12 md:col-span-3 ">
+            <div className="md:w-[50%] relative z-10 bg-gradient-to-r from-[#e4e5ff] to-[#f7f9ff] rounded-l-2xl p-8 md:p-12">
               <p className="text-md md:text-lg text-black">Our Founder</p>
               <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-gray-900">Founder Name Here</h2>
               <p className="mt-4 text-gray-700 leading-relaxed">
@@ -130,10 +131,8 @@ const Aboutus = () => {
             </div>
           </div>
 
-          {/* Row 2: Card (left) + Image (right) */}
-          <div className="grid grid-cols-1 md:grid-cols-5 items-start gap-x-12">
-            {/* Card left (larger) */}
-            <div className="relative z-10 bg-gradient-to-r from-[#e4e5ff] to-[#f7f9ff] rounded-l-2xl p-8 md:p-12 md:col-span-3">
+          <div className="flex flex-col md:flex-row md:justify-between items-start gap-8 md:gap-12">
+            <div className="md:w-[50%] relative z-10 bg-gradient-to-r from-[#e4e5ff] to-[#f7f9ff] rounded-l-2xl p-8 md:p-12 order-2 md:order-1">
               <p className="text-md md:text-lg text-black">Our Founder</p>
               <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-gray-900">Founder Name Here</h2>
               <p className="mt-4 text-gray-700 leading-relaxed">
@@ -151,22 +150,20 @@ const Aboutus = () => {
               </p>
             </div>
 
-            {/* Image right */}
-            <div className="flex justify-end md:col-span-2">
+            <div className="md:w-[45%] flex justify-end order-1 md:order-2">
               <img
                 src={images.owner}
                 alt="Co-Founder"
-                className="w-full max-w-[500px] h-[420px] md:h-[470px] object-cover rounded-md"
+                className="w-full h-[420px] md:h-[470px] object-contain rounded-md"
               />
             </div>
           </div>
         </div>
       </section>
 
-
-      <section className="w-full px-4 md:px-10 py-6">
+      {/* Values Section */}
+      <section className="w-full px-4 sm:px-16 py-6">
         <div className="w-full max-w-6xl bg-gradient-to-r from-yellow-100 rounded-l-3xl p-4 md:p-6">
-          {/* Heading */}
           <p className="text-xl font-medium text-black mb-2">Our values</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-black mb-4">Company Values</h2>
           <p className="text-sm md:text-base text-gray-700 max-w-3xl mb-10">
@@ -174,44 +171,22 @@ const Aboutus = () => {
             elementum tristique. Duis cursus, mi quis viverra ornare.
           </p>
 
-          {/* Values Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Value 1 */}
-            <div className="flex flex-col items-start">
-              <FaCube className="text-black text-3xl mb-3" />
-              <h3 className="font-medium text-2xl mb-2">Value 1</h3>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
-                elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla.
-              </p>
-            </div>
-
-            {/* Value 2 */}
-            <div className="flex flex-col items-start">
-              <FaCube className="text-black text-3xl mb-3" />
-              <h3 className="font-medium text-2xl mb-2">Value 2</h3>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
-                elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla.
-              </p>
-            </div>
-
-            {/* Value 3 */}
-            <div className="flex flex-col items-start">
-              <FaCube className="text-black text-3xl mb-3" />
-              <h3 className="font-medium text-2xl mb-2">Value 3</h3>
-              <p className="text-sm text-gray-700">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
-                elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla.
-              </p>
-            </div>
+            {[1, 2, 3].map((val) => (
+              <div key={val} className="flex flex-col items-start">
+                <FaCube className="text-black text-3xl mb-3" />
+                <h3 className="font-medium text-2xl mb-2">Value {val}</h3>
+                <p className="text-sm text-gray-700">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
+                  elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla.
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
+    </div>
+  );
+};
 
-
-    </div >
-  )
-}
-
-export default Aboutus
+export default Aboutus;
