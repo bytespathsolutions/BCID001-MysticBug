@@ -30,6 +30,16 @@ import terms from "../assets/Terms/terms.png"
 import stones_left from "../assets/Terms/stones-left.png"
 import stones_right from "../assets/Terms/stones-right.png"
 import privacyPolicy from "../assets/privacy-policy/privacyPolicy.png"
+import DiseaseBanner01 from "../assets/Disease/DiseaseBanner01.png"
+import DiseaseBanner02 from "../assets/Disease/DiseaseBanner02.png"
+import DiseaseBanner03 from "../assets/Disease/DiseaseBanner03.png"
+import DiseaseBanner04 from "../assets/Disease/DiseaseBanner04.png"
+import DiseaseBanner05 from "../assets/Disease/DiseaseBanner05.png"
+import DiseaseBanner06 from "../assets/Disease/DiseaseBanner06.png"
+import DiseaseBanner07 from "../assets/Disease/DiseaseBanner07.png"
+import DiseaseBanner08 from "../assets/Disease/DiseaseBanner08.png"
+import DiseaseBanner09 from "../assets/Disease/DiseaseBanner09.png"
+
 export const icons = {
   FaRegClock,
   LuTablet,
@@ -48,5 +58,5 @@ export const icons = {
 export const images = {
   bot, redLight, DiseaseBanner7, Offer, logo, clip_path_group, calling_girl, repair_man, Group1, homepage
   ,
-  calling_1, mail, office, mobile, Who_are_we, clip_path_vertical, owner, terms, stones_left, stones_right, privacyPolicy
+  calling_1, mail, office, mobile, Who_are_we, clip_path_vertical, owner, terms, stones_left, stones_right, privacyPolicy, DiseaseBanner01, DiseaseBanner02, DiseaseBanner03, DiseaseBanner04, DiseaseBanner05, DiseaseBanner06, DiseaseBanner07, DiseaseBanner08, DiseaseBanner09
 }
