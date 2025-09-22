@@ -7,6 +7,7 @@ import ContactUs from "./pages/ContactUs"
 import Aboutus from "./pages/Aboutus"
 import Terms from "./pages/Terms"
 import PrivacyPolicy from "./pages/PrivacyPolicy"
+import Diseases from "./pages/Diseases"
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/diseases" element={<Diseases />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
