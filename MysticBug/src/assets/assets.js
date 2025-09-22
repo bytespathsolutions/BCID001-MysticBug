@@ -6,7 +6,7 @@ import { FiHome } from "react-icons/fi";
 import { BiBook } from "react-icons/bi";
 import bot from "../assets/homepage/bot.png"
 import redLight from "../assets/homepage/redLight.png"
-import banner from "../assets/homepage/banner.png"
+import DiseaseBanner7 from "../assets/homepage/DiseaseBanner7.png"
 import logo from "../assets/homepage/logo.png"
 import Offer from "../assets/homepage/Offer.png"
 import clip_path_group from "../assets/homepage/clip_path_group.png"
@@ -46,7 +46,7 @@ export const icons = {
   , IoCallOutline
 }
 export const images = {
-  bot, redLight, banner, Offer, logo, clip_path_group, calling_girl, repair_man, Group1, homepage
+  bot, redLight, DiseaseBanner7, Offer, logo, clip_path_group, calling_girl, repair_man, Group1, homepage
   ,
   calling_1, mail, office, mobile, Who_are_we, clip_path_vertical, owner, terms, stones_left, stones_right, privacyPolicy
 }

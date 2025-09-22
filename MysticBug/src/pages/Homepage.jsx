@@ -105,13 +105,37 @@ const Homepage = () => {
           </p>
         </div>
 
-        {/* Image */}
-        <img
-          src={images.banner}
-          alt="Know More Banner"
-          className="mx-auto mt-8 w-full max-w-7xl object-contain px-2 md:px-0"
-        />
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[480px] mx-auto mt-6 rounded-lg overflow-hidden">
+          {/* Background Image */}
+          <img
+            src={images.DiseaseBanner7}
+            alt="know more disease"
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+          />
+          <div className="absolute bg-gradient-to-r to-transparent"></div>
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-8 md:px-12 py-6 sm:py-8 md:py-10 text-black">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-medium mb-1">SARS Emerges in China</h1>
+            <p className="text-sm sm:text-base md:text-md mb-3 sm:mb-4 text-gray-800">2002-2003</p>
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4 sm:mb-6 md:mb-8">
+              the Severe Acute Respiratory Syndrome (SARS) coronavirus, part of a family of viruses that
+              commonly cause respiratory symptoms such as coughing and shortness of breath, is first identified
+              in late 2002 in southern China. SARS spreads to more than two dozen countries across four
+              continents, infecting more than eight thousand people. close to eight hundred, most within China
+              and Hong Kong, by the time the outbreak is quelled in mid-2003. The virus is thought to have been
+              transmitted to humans via contact with civet cats.
+            </p>
+
+            {/* Button */}
+            <button className="absolute bottom-3 sm:bottom-4 md:bottom-2 right-3 sm:right-4 md:right-6 bg-teal-700 hover:bg-teal-800 text-white px-4 py-2 sm:px-5 sm:py-2 md:px-6 md:py-2 rounded-full text-sm sm:text-base w-fit cursor-pointer transition-colors duration-200">
+              Learn More
+            </button>
+          </div>
+        </div>
       </div>
+
+
       {/* healthcare needs section */}
       <div className="px-4 sm:px-12 py-6 sm:py-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between items-start gap-8">
@@ -170,13 +194,13 @@ const Homepage = () => {
       </div>
 
       {/* instant help section */}
-      <div className="relative h-full min-h-screen w-full rounded-2xl overflow-auto">
+      <div className="relative h-[110vh] md:min-h-screen w-full rounded-2xl overflow-hidden md:mb-10" >
 
         {/* Purple Card - Top Left */}
-        <div className="bg-gradient-to-r from-[#C8C9FF] md:ml-15 max-w-md rounded-l-2xl p-6">
+        <div className="bg-gradient-to-r from-[#C8C9FF] md:ml-15 max-w-xl rounded-l-2xl p-6">
           <h1 className="text-2xl font-medium">Instant Help,<br />One Tap Away.</h1>
-          <p className="mt-2 text-sm">
-            Emergencies don't wait — and neither should you. With MediH's Panic Button, immediate assistance is just a tap away. Alerts nearby medical professionals and dispatches help quickly.
+          <p className="mt-2 text-sm md:text-[16px]">
+            Emergencies don’t wait — and neither should you. With MediH’s Panic Button, immediate assistance is just a tap away. Whether it's a sudden health scare, an accident, or a loved one in distress, our system alerts nearby medical professionals, dispatches ambulance services by land, water, or air, and provides you with essential first-aid instructions while help is on the way. It’s peace of mind in your pocket, designed to act when you can’t.
           </p>
         </div>
         <div className="relative w-full">
@@ -189,24 +213,24 @@ const Homepage = () => {
           <img
             src={images.calling_girl}
             alt="calling girl"
-            className="absolute top-[-73px] md:top-[-12px] right-[70px] w-85 h-85 object-cover"
+            className="absolute top-[-23px] md:top-[-80px] right-[30px] md:right-[120px] w-65 h-65 md:w-99 md:h-99 object-cover"
           />
 
           <img
             src={images.repair_man}
             alt="repair man"
-            className="hidden md:block absolute bottom-10 left-[120px] w-85 h-85 object-cover z-10"
+            className="hidden md:block absolute bottom-15 left-[120px] w-85 h-85 md:w-95 md:h-95 object-cover z-10"
           />
         </div>
 
-        <div className="absolute bottom-[-10px] right-10 md:bottom-15 md:right-10 bg-gradient-to-r from-[#FFEEC3] max-w-md rounded-l-2xl p-6">
+        <div className="absolute bottom-[-60px] right-10 md:bottom-[-45px] md:right-10 bg-gradient-to-r from-[#FFEEC3] max-w-xl rounded-l-2xl p-6 mb-10">
           <h1 className="text-2xl font-medium">Your 24/7 Health <br />Companion.</h1>
-          <p className="mt-2 text-sm text-gray-800">
-            Got symptoms at 2AM? Meet MediH’s AI-powered chatbot — your always-on health assistant. Understand concerns, get next steps, and connect to doctors in real-time.
+          <p className="mt-2 text-sm md:text-[16px] text-gray-800">
+            Got symptoms at 2AM? Confused about what to do next? Meet MediH’s AI-powered chatbot — your always-on, always-ready health assistant. It listens to your concerns, helps you understand what might be wrong, suggests safe next steps, and connects you to doctors in real-time for virtual or in-person consultations. No more Googling symptoms. No more waiting on hold. Just simple, smart, accessible care — whenever you need it.
           </p>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
