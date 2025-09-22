@@ -42,55 +42,20 @@ const Homepage = () => {
           </div>
         </div>
 
-        {/* Chatbot with curved ring text */}
-        <div className="absolute right-4 sm:right-6 md:right-10 bottom-6 sm:bottom-10 flex flex-col items-center z-50">
-          <div className="relative">
-            {/* Curved text at the top of chatbot */}
-            <svg
-              viewBox="0 0 100 50"
-              className="absolute -top-1 left-1/2 -translate-x-1/2 w-24 h-12 sm:w-28 sm:h-14 z-40 pointer-events-none"
-            >
-              <defs>
-                <path
-                  id="curveText"
-                  d="M15,35 A35,35 0 0,1 85,35"
-                  fill="transparent"
-                />
-              </defs>
-              <text
-                fontSize="11"
-                className="font-semibold fill-gray-800"
-              >
-                <textPath href="#curveText" startOffset="50%" textAnchor="middle">
-                  Click here
-                </textPath>
-              </text>
-            </svg>
-
-            {/* Chatbot Image */}
-            <div className="relative bg-white rounded-full p-1 shadow-lg">
-              <img
-                src={images.bot}
-                alt="Chatbot"
-                className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-full object-cover relative z-20 cursor-pointer hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-          </div>
-
-          <p className="text-xs sm:text-sm mt-2 sm:mt-3 text-center text-gray-600 font-medium">
-            Assistance in One Tap!
-          </p>
+        <div className='absolute top-46 right-10 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48'>
+          <img src={images.bot} alt="bot image" className='object-cover w-30 cursor-pointer' />
         </div>
+
       </div>
       {/* medical emergency section */}
-      <div className="px-4 sm:px-12 py-6 sm:py-8 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <div className="px-4 sm:px-12 py-10 sm:py-8 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
 
         {/* Left Section - Text Content */}
         <div className='flex-1 w-full min-w-0 p-4 sm:p-6 lg:p-8 bg-gradient-to-r from-[#FFEEC3] to-transparent rounded-xl lg:rounded-2xl'>
           <h1 className='font-medium text-3xl sm:text-4xl lg:text-5xl text-[#0B0103] mb-4 sm:mb-6 leading-tight'>
             Emergency Help, When Every Second Counts.
           </h1>
-          <p className='font-medium text-base sm:text-lg lg:text-xl text-[#0B0103] leading-relaxed'>
+          <p className='font-medium text-base sm:text-lg lg:text-xl text-[#0B0103] '>
             When every second matters, MediH's Panic Button gives you immediate access to emergency support.
             With a single tap, our system alerts nearby healthcare professionals, activates ambulance services,
             and guides you through essential first steps — ensuring help reaches you as fast as possible.
@@ -100,59 +65,14 @@ const Homepage = () => {
         {/* Right Section - Emergency Button */}
         <div className="flex-1 flex justify-center items-center relative min-h-[300px] sm:min-h-[400px]">
           <div className="relative">
-
-            {/* Top Curved Text  */}
-            <svg
-              viewBox="0 0 200 100"
-              className="absolute -top-12 sm:-top-16 left-1/2 -translate-x-1/2 w-72 sm:w-80 h-20 sm:h-24 z-30 pointer-events-none"
-            >
-              <defs>
-                <path
-                  id="topCurve"
-                  d="M39,70 A70,90 0 0,1 170,80"
-                  fill="transparent"
-                />
-              </defs>
-              <text
-                fontSize="14"
-                className="font-medium fill-gray-700 tracking-wide"
-              >
-                <textPath href="#topCurve" startOffset="50%" textAnchor="middle">
-                  Immediate Medical Assistance
-                </textPath>
-              </text>
-            </svg>
-
             {/* Emergency Button */}
-            <div className="relative bg-white rounded-full p-2 shadow-lg">
+            <div className="relative bg-white p-2">
               <img
                 src={images.redLight}
                 alt="Emergency red light"
-                className="w-43 h-43 sm:w-50 sm:h-50 lg:w-70 lg:h-70 rounded-full object-cover cursor-pointer relative z-20"
+                className="bg-transparent w-65 h-65 sm:w-50 sm:h-50 lg:w-80 lg:h-80 rounded-full object-cover cursor-pointer relative z-20"
               />
             </div>
-
-            {/* Bottom Curved Text */}
-            <svg
-              viewBox="0 0 200 100"
-              className="absolute -bottom-12 sm:-bottom-16 left-1/2 -translate-x-1/2 w-64 sm:w-72 h-20 sm:h-24 z-30 pointer-events-none"
-            >
-              <defs>
-                <path
-                  id="bottomCurve"
-                  d="M35,30 A60,40 0 0,0 160,30"
-                  fill="transparent"
-                />
-              </defs>
-              <text
-                fontSize="16"
-                className="font-semibold fill-gray-800"
-              >
-                <textPath href="#bottomCurve" startOffset="50%" textAnchor="middle">
-                  Click Here For Help
-                </textPath>
-              </text>
-            </svg>
           </div>
         </div>
 
@@ -214,32 +134,32 @@ const Homepage = () => {
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 mt-6">
-              <div className='p-4 bg-purple-50 rounded shadow-md'>
+              <div className='p-4 bg-gradient-to-r from-[#C8C9FF] rounded-2xl'>
                 <icons.FaRegClock className='w-6 h-6 mb-2' />
                 <h2 className='text-lg sm:text-[18px] md:text-[20px] leading-[1.4] tracking-[-0.01em]'>24/7 AI Chatbot</h2>
                 <p className=' text-sm sm:text-base md:text-base leading-[1.5] tracking-[-0.01em]'>Instant health guidance, anytime you need it.</p>
               </div>
-              <div className='p-4 bg-yellow-50 rounded shadow-md'>
+              <div className='p-4 bg-gradient-to-r from-yellow-100 rounded-2xl'>
                 <icons.FaHandHoldingHeart className='w-6 h-6 mb-2' />
                 <h2 className=' text-lg sm:text-[18px] md:text-[20px] leading-[1.4] tracking-[-0.01em]'>Real-Time Family Updates</h2>
                 <p className=' text-sm sm:text-base md:text-base leading-[1.5] tracking-[-0.01em]'>Stay informed about your loved ones' care.</p>
               </div>
-              <div className='p-4 bg-yellow-50 rounded shadow-md'>
+              <div className='p-4 bg-gradient-to-r from-yellow-100 rounded-2xl'>
                 <icons.RiChatCheckLine className='w-6 h-6 mb-2' />
                 <h2 className=' text-lg sm:text-[18px] md:text-[20px] leading-[1.4] tracking-[-0.01em]'>Instant Appointment Booking</h2>
                 <p className=' text-sm sm:text-base md:text-base leading-[1.5] tracking-[-0.01em]'>Book virtual or in-person visits in seconds</p>
               </div>
-              <div className='p-4 bg-purple-50 rounded shadow-md'>
+              <div className='p-4 bg-gradient-to-r from-[#C8C9FF] rounded-2xl '>
                 <icons.LuTablet className='w-6 h-6 mb-2' />
                 <h2 className=' text-lg sm:text-[18px] md:text-[20px] leading-[1.4] tracking-[-0.01em]'>Telemedicine</h2>
                 <p className=' text-sm sm:text-base md:text-base leading-[1.5] tracking-[-0.01em]'>Consult top doctors without leaving home</p>
               </div>
-              <div className='p-4 bg-purple-50 rounded shadow-md'>
+              <div className='p-4 bg-gradient-to-r from-[#C8C9FF] rounded-2xl '>
                 <icons.BiBook className='w-6 h-6 mb-2' />
                 <h2 className=' text-lg sm:text-[18px] md:text-[20px] leading-[1.4] tracking-[-0.01em]'>Medical Record Access</h2>
                 <p className=' text-sm sm:text-base md:text-base leading-[1.5] tracking-[-0.01em]'>All your health records, securely in one place.</p>
               </div>
-              <div className='p-4 bg-yellow-50 rounded shadow-md'>
+              <div className='p-4 bg-gradient-to-r from-yellow-100 rounded-2xl '>
                 <icons.FiHome className='w-6 h-6 mb-2' />
                 <h2 className=' text-lg sm:text-[18px] md:text-[20px] leading-[1.4] tracking-[-0.01em]'>Medicine Delivery</h2>
                 <p className=' text-sm sm:text-base md:text-base leading-[1.5] tracking-[-0.01em]'>Get prescribed medicines delivered to your door.</p>
