@@ -8,11 +8,13 @@ import Aboutus from "./pages/Aboutus"
 import Terms from "./pages/Terms"
 import PrivacyPolicy from "./pages/PrivacyPolicy"
 import Diseases from "./pages/Diseases"
+import ScrollToTop from "./components/ScrollToTop"
 
 const App = () => {
   return (
     <div className="w-full min-h-screen">
       <div className="max-w-[1440px] mx-auto">
+        <ScrollToTop />
         <Navbar />
       </div>
       <Routes>
@@ -25,9 +27,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <div className="max-w-[1440px] mx-auto">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }
