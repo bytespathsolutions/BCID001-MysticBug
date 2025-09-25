@@ -48,7 +48,7 @@ const Diseases = () => {
       title: "penicillin ushers in Antibiotics era",
       year: "1928",
       description:
-        "Scottish scientist Alexander Fleming discovers penicillin, the first antibiotic—a class of drugs used to treat bacterial infections—marking a major milestone for global health. Widespread use of antibiotics takes off in the early 1940s during World War II.",
+        "Scottish scientist Alexander Fleming discovers penicillin, the first antibiotic—a class of drugs used to treat bacterial infections—marking a major milestone for global health. Widespread use of antibiotics takes off in the early 1940s during World War II.",
     },
     {
       id: 7,
@@ -85,7 +85,7 @@ const Diseases = () => {
   ]
 
   return (
-    <div className="px-4 md:px-16 mt-22 md:mt-20">
+    <div className="px-4 sm:px-16 mt-[105px]">
       {diseasesData.map((disease) => (
         <div
           key={disease.id}

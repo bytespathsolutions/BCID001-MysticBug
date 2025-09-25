@@ -8,9 +8,9 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate()
   return (
-    <header className="fixed top-0 left-0 right-0 w-full h-19 text-white flex items-center justify-between px-4 sm:px-22 py-3 z-50 bg-white shadow-md">
+    <header className="fixed top-0 left-0 right-0 w-full h-19 text-white flex items-center justify-between px-4 sm:px-14 py-3 z-50 bg-white shadow-md">
       {/* Logo */}
-      <div onClick={() => navigate('/')} className="flex items-center justify-center gap-3 w-[144px] h-[55px] cursor-pointer">
+      <div onClick={() => { navigate('/'); window.scrollTo(0, 0) }} className="flex items-center justify-center gap-3 w-[144px] h-[55px] cursor-pointer">
         <img src={images.logo} alt="MediH Logo" className="h-10" />
       </div>
 
@@ -32,12 +32,12 @@ const Navbar = () => {
         </div>
 
         {/* Links */}
-        <nav className="flex items-center gap-6">
-          <a href="/aboutus" className="text-[16px] text-[#000000]">About Us</a>
-          <a href="/emergency" className="text-[16px] text-[#000000]">Emergency</a>
-          <a href="/diseases" className="text-[16px] text-[#000000]">Diseases</a>
-          <a href="/contactus" className="text-[16px] text-[#000000]">Contact Us</a>
-          <a href="/login" className="flex items-center gap-1 text-[16px] text-[#000000]">
+        <nav className="flex items-center gap-6 text-[#000000]">
+          <a href="/aboutus" className=" font-normal ">About Us</a>
+          <a href="/emergency" className=" font-normal ">Emergency</a>
+          <a href="/diseases" className=" font-normal ">Diseases</a>
+          <a href="/contactus" className=" font-normal ">Contact Us</a>
+          <a href="/login" className="flex items-center gap-1  font-normal ">
             Log In <FaUserCircle size={20} />
           </a>
         </nav>
@@ -61,18 +61,20 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Dropdown */}
-      {showMenu && (
-        <nav className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start gap-4 px-6 py-4 lg:hidden z-50">
-          <a onClick={() => setShowMenu(!showMenu)} href="/aboutus" className="text-[16px] text-[#000000]">About Us</a>
-          <a onClick={() => setShowMenu(!showMenu)} href="/emergency" className="text-[16px] text-[#000000]">Emergency</a>
-          <a onClick={() => setShowMenu(!showMenu)} href="/diseases" className="text-[16px] text-[#000000]">Diseases</a>
-          <a onClick={() => setShowMenu(!showMenu)} href="/contactus" className="text-[16px] text-[#000000]">Contact Us</a>
-          <a onClick={() => setShowMenu(!showMenu)} href="/login" className="flex items-center gap-1 text-[16px] text-[#000000]">
-            Log In <FaUserCircle size={20} />
-          </a>
-        </nav>
-      )}
-    </header>
+      {
+        showMenu && (
+          <nav className="absolute top-full left-0 w-full bg-white text-[#000000] shadow-md flex flex-col items-start gap-4 px-6 py-4 lg:hidden z-50 font-lato">
+            <a onClick={() => setShowMenu(!showMenu)} href="/aboutus" className=" font-normal">About Us</a>
+            <a onClick={() => setShowMenu(!showMenu)} href="/emergency" className=" font-normal">Emergency</a>
+            <a onClick={() => setShowMenu(!showMenu)} href="/diseases" className=" font-normal">Diseases</a>
+            <a onClick={() => setShowMenu(!showMenu)} href="/contactus" className=" font-normal ">Contact Us</a>
+            <a onClick={() => setShowMenu(!showMenu)} href="/login" className="flex items-center gap-1  font-normal ">
+              Log In <FaUserCircle size={20} />
+            </a>
+          </nav>
+        )
+      }
+    </header >
   );
 };
 

@@ -7,12 +7,12 @@ const Footer = () => {
 
   return (
     <div className="relative w-full px-4 sm:px-16 py-8 bg-white">
-      <div className="w-full flex flex-col md:flex-row md:justify-start items-center text-center md:text-left gap-8">
+      <div className="w-full flex flex-col md:flex-row md:justify-between items-center text-center md:text-left gap-8 max-w-5xl">
         <div onClick={() => { navigate('/'); window.scrollTo(0, 0) }} className="flex justify-center items-center cursor-pointer">
           <img src={images.logo} alt="logo" className="h-auto w-32 md:w-52" />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-15 md:ml-130 relative z-20">
+        <div className="flex flex-col md:flex-row gap-5 md:gap-10 p-4 relative z-20">
           <div className="flex flex-col gap-3">
             <h1 className="text-lg font-medium text-gray-900">Quick Links</h1>
             <Link className="cursor-pointer hover:underline hover:text-[#008287] transition-colors" to="/aboutus">About Us</Link>

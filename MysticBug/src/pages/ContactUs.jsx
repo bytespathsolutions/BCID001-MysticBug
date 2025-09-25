@@ -16,7 +16,7 @@ const ContactUs = () => {
       <div className="relative flex flex-col md:flex-row md:justify-between md:items-center  md:px-20 px-4 py-6 gap-6">
         <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 w-full rounded-lg max-w-lg p-4 shadow-sm z-10 relative">
           <icons.MdOutlineMail className="size-10 font-medium mb-3" />
-          <h1 className="font-semibold text-lg mb-2">Email</h1>
+          <h1 className="font-merriweather font-bold text-32 mb-2">Email</h1>
           <p className="mb-2 text-sm md:text-base">
             Need help or have a question? Email us anytime:
           </p>
@@ -53,7 +53,7 @@ const ContactUs = () => {
 
         <div className="bg-gradient-to-r from-purple-100 to-purple-50 w-full rounded-lg max-w-xl p-4 shadow-sm z-10 relative">
           <icons.CiLocationOn className="size-10 font-medium mb-3" />
-          <h1 className="font-semibold text-lg mb-2">Office</h1>
+          <h1 className="font-merriweather font-bold text-32  mb-2">Office</h1>
           <p className="mb-2 text-sm md:text-base">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             varius enim in ero.
@@ -69,7 +69,7 @@ const ContactUs = () => {
       <div className="relative flex flex-col md:flex-row md:justify-between md:items-center md:px-20 px-4 py-6 gap-6">
         <div className="bg-gradient-to-r from-purple-100 to-purple-50 w-full rounded-lg max-w-xl p-4 shadow-sm z-10 relative">
           <icons.IoCallOutline className="size-10 font-medium mb-3" />
-          <h1 className="font-semibold text-lg mb-2">Phone</h1>
+          <h1 className="font-merriweather font-bold text-32 mb-2">Phone</h1>
           <p className="mb-2 text-sm md:text-base">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             varius enim in ero.
