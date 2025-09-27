@@ -88,12 +88,10 @@ const Homepage = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-scroll every 1 second
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % diseasesData.length);
-    }, 2000); // 1 second
-
+    }, 2000);
     return () => clearInterval(interval);
   }, [diseasesData.length]);
 
@@ -209,7 +207,7 @@ const Homepage = () => {
           </div>
 
           {/* Card */}
-          <div className="relative w-full h-[300px] sm:h-[400px] md:h-[480px] mx-auto mt-6 rounded-lg overflow-hidden z-10 bg-white/60 backdrop-blur-sm shadow-lg">
+          <div className="relative w-full h-[300px] sm:h-[400px] md:h-[590px] mx-auto mt-6 rounded-lg overflow-hidden z-10 bg-white/60 backdrop-blur-sm shadow-lg">
             {/* Background Image */}
             <img
               src={diseasesData[currentIndex].banner}
