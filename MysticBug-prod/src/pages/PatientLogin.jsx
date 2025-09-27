@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { icons, images } from '../assets/assets'
-
+import { useNavigate } from 'react-router-dom'
 const PatientLogin = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
+  const navigate = useNavigate()
   const handleForm = () => {
+
     if (!name || !email || !password) {
       setError("All fields are required")
     }
@@ -73,7 +75,7 @@ const PatientLogin = () => {
                   className="w-full px-4 py-3 border-2 border-teal-600 rounded-none focus:outline-none focus:border-teal-700 text-gray-700"
                 />
                 <div className="text-right mt-2">
-                  <a href="#" className="text-teal-600 hover:text-teal-700 underline text-sm">
+                  <a href="/forgot-password" className="text-teal-600 hover:text-teal-700 underline text-sm">
                     Forgot your password?
                   </a>
                 </div>
@@ -94,10 +96,10 @@ const PatientLogin = () => {
               </button>
             </form>
           </div>
-          <img src={images.Patient} alt="Patient image" className='hidden sm:block' />
         </div>
-        <img src={images.lower_clip} alt="clipImage" className='absolute h-[800px] bottom-[-130px] w-full ml:200px pointer-events-none' />
+        <img src={images.Patient} alt="Patient image" className='hidden sm:block' />
       </div>
+      <img src={images.lower_clip} alt="clipImage" className='absolute h-[800px] bottom-[-130px] w-full ml:200px pointer-events-none' />
     </div>
   )
 }
