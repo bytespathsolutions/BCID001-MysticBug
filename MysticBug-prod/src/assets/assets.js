@@ -6,6 +6,10 @@ import Doctor from "./login/Doctor.png"
 import Patient from "./login/Patient.png"
 import upper_clip from "./Doctor/upper_clip.png"
 import lower_clip from "./Doctor/lower_clip.png"
+import { FaLeaf } from "react-icons/fa"
+
 
 
 export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group, lower_clip, upper_clip }
+
+export const icons = { FaLeaf }
