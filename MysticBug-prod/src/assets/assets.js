@@ -4,6 +4,8 @@ import Investor from "./login/Investor.png"
 import otp_man from "./login/otp_man.png"
 import Doctor from "./login/Doctor.png"
 import Patient from "./login/Patient.png"
+import upper_clip from "./Doctor/upper_clip.png"
+import lower_clip from "./Doctor/lower_clip.png"
 
 
-export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group }
+export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group, lower_clip, upper_clip }
