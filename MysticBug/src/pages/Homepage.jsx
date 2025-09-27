@@ -1,7 +1,102 @@
 import Banner from '../components/Banner'
 import { images } from '../assets/assets'
 import { icons } from "../assets/assets"
+import { useEffect, useState } from 'react'
 const Homepage = () => {
+  const diseasesData = [
+    {
+      id: 1,
+      banner: images.DiseaseBanner01,
+      title: "SARS Emerges in China",
+      year: "2002-2003",
+      description:
+        "The Severe Acute Respiratory Syndrome (SARS) coronavirus, part of a family of viruses that commonly cause respiratory symptoms such as coughing and shortness of breath, is first identified in late 2002 in southern China. SARS spreads to more than two dozen countries across four continents, infecting more than eight thousand people. Close to eight hundred, most within China and Hong Kong, by the time the outbreak is quelled in mid-2003. The virus is thought to have been transmitted to humans via contact with civet cats.",
+    },
+    {
+      id: 2,
+      banner: images.DiseaseBanner02,
+      title: "First Cholera Pandemic",
+      year: "1817-1947",
+      description:
+        "Seven cholera pandemics have occured since 1817, but there global death are unclear Between 1865 & 1947 at least 23 million people died from cholera in india alone",
+    },
+    {
+      id: 3,
+      banner: images.DiseaseBanner03,
+      title: "Flu Pandemic",
+      year: "1830-1833",
+      description:
+        "The first pandemic that can be confidently attributed to the flu occured in 1580 Between 10-26 flu, pandemic have occured since the",
+    },
+    {
+      id: 4,
+      banner: images.DiseaseBanner04,
+      title: "Russian flu",
+      year: "1889",
+      description:
+        "4 million estimated deaths",
+    },
+    {
+      id: 5,
+      banner: images.DiseaseBanner05,
+      title: "Spanish flu Pandemic",
+      year: "1918-1920",
+      description:
+        "50-100 million deaths",
+    },
+    {
+      id: 6,
+      banner: images.DiseaseBanner06,
+      title: "penicillin ushers in Antibiotics era",
+      year: "1928",
+      description:
+        "Scottish scientist Alexander Fleming discovers penicillin, the first antibiotic—a class of drugs used to treat bacterial infections—marking a major milestone for global health. Widespread use of antibiotics takes off in the early 1940s during World War II.",
+    },
+    {
+      id: 7,
+      banner: images.DiseaseBanner07,
+      title: "Asian Flu Pandemic",
+      year: "1957-1958",
+      description:
+        "A new strain of influenza virus, designated H2N2, is reported in Singapore in February 1957, and soon spreads to China, Hong Kong, the United Kingdom (UK), and the United States. Though less severe than the Spanish Flu, the Asian Flu kills more than one million people worldwide.",
+    },
+    {
+      id: 8,
+      banner: images.DiseaseBanner08,
+      title: "Hong Kong Flu",
+      year: "1968-1969",
+      description:
+        ": A decade after the Asian Flu, a new strain called H3N2 emerges. Commonly called the Hong Kong Flu, it emerges first in Hong Kong, then a British colony, in July 1968.",
+    },
+    {
+      id: 9,
+      banner: images.DiseaseBanner09,
+      title: "Smallpox",
+      year: "1977-1980",
+      description:
+        "The last known case of smallpox, a viral disease that plagued humans for millennia, is diagnosed in 1977 in Somalia, following a nearly two-decade-long global vaccination campaign. Three years later the WHO formally declares it eradicated around the globe.",
+    },
+    {
+      id: 10,
+      banner: images.DiseaseBanner01,
+      title: "HIV/ AIDS pandemic",
+      year: "1981-2025",
+      description:
+        "A 1981 report by what is now the U.S. Centers for Disease Control and Prevention (CDC) describes a rare form of pneumonia that is later identified as Acquired Immunodeficiency Syndrome, or AIDS. It is the most advanced stage of Human Immunodeficiency Virus (HIV).",
+    }
+  ]
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Auto-scroll every 1 second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % diseasesData.length);
+    }, 2000); // 1 second
+
+    return () => clearInterval(interval);
+  }, [diseasesData.length]);
+
   return (
     <div>
       <Banner src={images.homepage} />
@@ -105,7 +200,8 @@ const Homepage = () => {
           </p>
         </div>
 
-        <div className="relative h-full sm:min-h-screen ">
+
+        <div className="relative h-full sm:min-h-screen">
           {/* Blurry Effects (behind everything, hidden on mobile) */}
           <div className="absolute inset-0 pointer-events-none z-0 hidden sm:block">
             <div className="absolute top-[-65px] left-[-70px] h-72 w-72 rounded-full bg-[#005B5F] blur-3xl opacity-70" />
@@ -116,22 +212,21 @@ const Homepage = () => {
           <div className="relative w-full h-[300px] sm:h-[400px] md:h-[480px] mx-auto mt-6 rounded-lg overflow-hidden z-10 bg-white/60 backdrop-blur-sm shadow-lg">
             {/* Background Image */}
             <img
-              src={images.DiseaseBanner7}
-              alt="know more disease"
-              className="absolute inset-0 w-full h-full object-cover opacity-30"
+              src={diseasesData[currentIndex].banner}
+              alt={diseasesData[currentIndex].title}
+              className="absolute inset-0 w-full h-full object-cover opacity-30 transition-all duration-700"
             />
 
             {/* Content */}
             <div className="relative z-20 flex flex-col justify-center h-full px-4 sm:px-8 md:px-12 py-6 sm:py-8 md:py-10 text-black">
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-medium mb-1">SARS Emerges in China</h1>
-              <p className="text-sm sm:text-base md:text-md mb-3 sm:mb-4 text-gray-800">2002-2003</p>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-medium mb-1">
+                {diseasesData[currentIndex].title}
+              </h1>
+              <p className="text-sm sm:text-base md:text-md mb-3 sm:mb-4 text-gray-800">
+                {diseasesData[currentIndex].year}
+              </p>
               <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4 sm:mb-6 md:mb-8">
-                the Severe Acute Respiratory Syndrome (SARS) coronavirus, part of a family of viruses that
-                commonly cause respiratory symptoms such as coughing and shortness of breath, is first identified
-                in late 2002 in southern China. SARS spreads to more than two dozen countries across four
-                continents, infecting more than eight thousand people. close to eight hundred, most within China
-                and Hong Kong, by the time the outbreak is quelled in mid-2003. The virus is thought to have been
-                transmitted to humans via contact with civet cats.
+                {diseasesData[currentIndex].description}
               </p>
 
               {/* Button */}
@@ -143,11 +238,11 @@ const Homepage = () => {
         </div>
 
 
-      </div>
+      </div >
 
 
       {/* healthcare needs section */}
-      <div className="px-4 sm:px-12">
+      <div className="px-4 sm:px-12" >
         <div className="flex flex-col md:flex-row md:items-center justify-between items-start gap-8">
 
           {/* Image with Blur */}
@@ -210,7 +305,7 @@ const Homepage = () => {
 
 
       {/* instant help section */}
-      <div className="relative h-full w-full rounded-2xl overflow-hidden md:mb-10">
+      <div div className="relative h-full w-full rounded-2xl overflow-hidden md:mb-10" >
 
         <div className="mt-5 sm:mt-0 bg-gradient-to-r from-[#C8C9FF] sm:ml-[24px] max-w-xl rounded-l-2xl p-6">
           <h1 className="font-normal font-merriweather text-18 sm:text-56 leading-tight">Instant Help,One Tap Away.</h1>

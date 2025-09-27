@@ -12,7 +12,7 @@ import ScrollToTop from "./components/ScrollToTop"
 
 const App = () => {
   return (
-    <div className="w-full min-h-screen">
+    <div className="min-w-full min-h-screen overflow-x-hidden">
       <div className="max-w-[1440px] mx-auto">
         <ScrollToTop />
         <Navbar />
