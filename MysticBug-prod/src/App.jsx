@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import { Routes, Route } from "react-router-dom"
 import PatientLogin from './pages/PatientLogin'
 import InvestorLogin from './pages/InvestorLogin'
+import OtpReset from './pages/OtpReset'
 const App = () => {
   return (
     <div>
@@ -11,6 +12,7 @@ const App = () => {
         <Route path='/patient-login' element={<PatientLogin />} />
         <Route path='/doctor-login' element={<DoctorLogin />} />
         <Route path='/investor-login' element={<InvestorLogin />} />
+        <Route path='/forgot-password' element={<OtpReset />} />
       </Routes>
     </div>
   )
