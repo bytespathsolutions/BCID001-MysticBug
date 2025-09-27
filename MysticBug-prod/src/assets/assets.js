@@ -1,0 +1,9 @@
+import Clippath_group from "./login/Clippath_group.png"
+import Group from "./login/Group.png"
+import Investor from "./login/Investor.png"
+import otp_man from "./login/otp_man.png"
+import Doctor from "./login/Doctor.png"
+import Patient from "./login/Patient.png"
+
+
+export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group }
