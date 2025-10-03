@@ -7,8 +7,8 @@ const DoctorLogin = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const navigate = useNavigate()
-  const handleForm = () => {
-
+  const handleForm = (e) => {
+    e.preventDefault()
     if (!name || !email || !password) {
       setError("All fields are required")
     }
@@ -28,7 +28,7 @@ const DoctorLogin = () => {
             <p className="font-lato font-normal text-base sm:text-18 flex items-center gap-2 whitespace-nowrap mb-2">
               Your Expertise Saves Lives. We're Honored to Support You<span className='text-green-700'> <icons.FaLeaf className='text-green-700' /></span>
             </p>
-            {error && <div className="bg-red-400 border border-red-100 text-black rounded">
+            {error && <div className="bg-[#F6B7AC] border border-red-100 text-black rounded">
               <p className="text-center p-2">{error}</p>
             </div>
             }
@@ -104,13 +104,15 @@ const DoctorLogin = () => {
                 type="submit"
                 className="w-full border border-gray-900 text-gray-700 py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100"
               >
-                Log in With Google
+                <icons.FaGoogle size={20} />
+                <span>Log in With Google</span>
               </button>
 
               <button
                 type="button"
                 className="w-full border border-gray-900 text-gray-700 py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100"
               >
+                <icons.FaApple size={24} />
                 <span>Log in with Apple ID</span>
               </button>
             </form>
