@@ -5,7 +5,8 @@ import AdminLogin from './pages/AdminLogin'
 import InvestorLogin from './pages/InvestorLogin'
 import DoctorLogin from './pages/DoctorLogin'
 import PatientLogin from './pages/PatientLogin'
-
+import PatientDashboard from './Dashboard/PatientDashboard'
+import UploadMedicalRecords from './pages/UploadMedicalRecords'
 const App = () => {
   return (
     <div>
@@ -16,7 +17,8 @@ const App = () => {
         <Route path='/investor-login' element={<InvestorLogin />} />
         <Route path='/admin-login' element={<AdminLogin />} />
         <Route path='/forgot-password' element={<OtpReset />} />
-
+        <Route path='/' element={<PatientDashboard />} />
+        <Route path='/upload-medical-records' element={<UploadMedicalRecords />} />
       </Routes>
     </div>
   )
