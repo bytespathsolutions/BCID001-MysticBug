@@ -24,7 +24,7 @@ const Login = () => {
             Select login type before proceeding
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 max-w-5xl mx-auto">
             <div className="w-full">
               <div
                 role="button"
@@ -74,6 +74,23 @@ const Login = () => {
                 />
               </div>
               <h2 className="font-lato text-lg sm:text-2xl mt-2 text-center">Investor</h2>
+            </div>
+
+            <div className="w-full">
+              <div
+                role="button"
+                tabIndex={0}
+                aria-label="Admin login"
+                onClick={() => handleNavigate('/admin-login')}
+                className="p-4 rounded-2xl shadow-md border-4 border-[#0A4F5B] h-[200px] sm:h-[250px] flex items-center justify-center bg-white cursor-pointer hover:shadow-lg transition-shadow duration-200"
+              >
+                <img
+                  src={images.Admin}
+                  alt="admin image"
+                  className="w-[140px] sm:w-[200px] object-contain h-auto pointer-events-none"
+                />
+              </div>
+              <h2 className="font-lato text-lg sm:text-2xl mt-2 text-center">Admin</h2>
             </div>
           </div>
         </div>
