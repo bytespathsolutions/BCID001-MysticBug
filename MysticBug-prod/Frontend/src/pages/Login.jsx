@@ -4,8 +4,8 @@ import { images } from '../assets/assets';
 const Login = () => {
   const navigate = useNavigate();
 
-  const handleNavigate = (path) => {
-    navigate(path);
+  const handleNavigate = (path, userType) => {
+    navigate(path, { state: { userType } });
   };
 
   return (
@@ -30,7 +30,7 @@ const Login = () => {
                 role="button"
                 tabIndex={0}
                 aria-label="Patient login"
-                onClick={() => handleNavigate('/patient-login')}
+                onClick={() => handleNavigate('/patient-login', 'patient')}
                 className="p-4 rounded-2xl shadow-md border-4 border-[#0A4F5B] h-[200px] sm:h-[250px] flex items-center justify-center bg-white cursor-pointer hover:shadow-lg transition-shadow duration-200"
               >
                 <img
@@ -47,7 +47,7 @@ const Login = () => {
                 role="button"
                 tabIndex={0}
                 aria-label="Doctor login"
-                onClick={() => handleNavigate('/doctor-login')}
+                onClick={() => handleNavigate('/doctor-login', 'doctor')}
                 className="p-4 rounded-2xl shadow-md border-4 border-[#0A4F5B] h-[200px] sm:h-[250px] flex items-center justify-center bg-white cursor-pointer hover:shadow-lg transition-shadow duration-200"
               >
                 <img
@@ -64,7 +64,7 @@ const Login = () => {
                 role="button"
                 tabIndex={0}
                 aria-label="Investor login"
-                onClick={() => handleNavigate('/investor-login')}
+                onClick={() => handleNavigate('/investor-login', 'investor')}
                 className="p-4 rounded-2xl shadow-md border-4 border-[#0A4F5B] h-[200px] sm:h-[250px] flex items-center justify-center bg-white cursor-pointer hover:shadow-lg transition-shadow duration-200"
               >
                 <img
@@ -81,7 +81,7 @@ const Login = () => {
                 role="button"
                 tabIndex={0}
                 aria-label="Admin login"
-                onClick={() => handleNavigate('/admin-login')}
+                onClick={() => handleNavigate('/admin-login', 'admin')}
                 className="p-4 rounded-2xl shadow-md border-4 border-[#0A4F5B] h-[200px] sm:h-[250px] flex items-center justify-center bg-white cursor-pointer hover:shadow-lg transition-shadow duration-200"
               >
                 <img

@@ -1,17 +1,26 @@
 import { useState } from 'react'
 import { icons, images } from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useAuth } from '../Context/AuthContext'
 const DoctorLogin = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { userType } = location?.state || {};
+
+  const { signup, googleLogin, appleLogin } = useAuth();
   const handleForm = (e) => {
     e.preventDefault()
     if (!name || !email || !password) {
       setError("All fields are required")
     }
+    signup(email, password, userType)
+    setEmail('')
+    setName('')
+    setPassword('')
   }
   return (
     <div className='relative overflow-hidden h-screen'>
@@ -100,7 +109,7 @@ const DoctorLogin = () => {
                 Log in
               </button>
 
-              <button
+              <button onClick={googleLogin}
                 type="submit"
                 className="w-full border border-gray-900 text-gray-700 py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100"
               >
@@ -108,7 +117,7 @@ const DoctorLogin = () => {
                 <span>Log in With Google</span>
               </button>
 
-              <button
+              <button onClick={appleLogin}
                 type="button"
                 className="w-full border border-gray-900 text-gray-700 py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100"
               >

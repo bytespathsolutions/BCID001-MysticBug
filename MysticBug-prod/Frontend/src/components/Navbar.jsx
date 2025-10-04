@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
-import { images } from "../../../MysticBug/src/assets/assets";
+import { images } from "../assets/assets"
 import { useNavigate } from "react-router-dom"
 const Navbar = ({ navBG, searchBarColor }) => {
   const [showMenu, setShowMenu] = useState(false);
