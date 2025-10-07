@@ -1,5 +1,6 @@
 import Clippath_group from "./login/Clippath_group.png"
 import Group from "./login/Group.png"
+import logo from "./logo.png"
 import Investor from "./login/Investor.png"
 import otp_man from "./login/otp_man.png"
 import Doctor from "./login/Doctor.png"
@@ -20,6 +21,6 @@ import { FaApple } from "react-icons/fa";
 
 
 
-export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group, lower_clip, upper_clip, bottomWave, Appointments, Monitoring, Reminders, Medical_Records, Prescriptions, Medical_assistant, Admin }
+export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group, lower_clip, upper_clip, bottomWave, Appointments, Monitoring, Reminders, Medical_Records, Prescriptions, Medical_assistant, Admin, logo }
 
 export const icons = { FaLeaf, FaGoogle, FaApple }
