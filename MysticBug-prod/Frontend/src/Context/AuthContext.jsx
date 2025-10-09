@@ -31,6 +31,7 @@ const FirebaseContext = createContext();
 
 export const FirebaseProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [uid, setUid] = useState(null);
   const [role, setRole] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,6 +44,7 @@ export const FirebaseProvider = ({ children }) => {
     const res = await createUserWithEmailAndPassword(firebaseAuth, email, password);
     const idToken = await res.user.getIdToken(true);
     setToken(idToken);
+    setUid(res.user.uid);
     const userName = res.user.displayName || "User";
     setUser(userName);
     return res;
@@ -52,6 +54,7 @@ export const FirebaseProvider = ({ children }) => {
     const res = await signInWithEmailAndPassword(firebaseAuth, email, password);
     const idToken = await res.user.getIdToken(true);
     setToken(idToken);
+    setUid(res.user.uid);
     const userName = res.user.displayName || "User";
     setUser(userName);
     return res;
@@ -61,8 +64,9 @@ export const FirebaseProvider = ({ children }) => {
     setRole(null);
     setToken(null);
     setUser(null);
+    setUid(null);
     await signOut(firebaseAuth);
-    navigate("/"); // redirect to home or login after logout
+    navigate("/");
   };
 
   // --- Google Login ---
@@ -72,6 +76,7 @@ export const FirebaseProvider = ({ children }) => {
     const idToken = await result.user.getIdToken(true);
     const userName = result.user.displayName || "User";
     setUser(userName);
+    setUid(result.user.uid);
     setToken(idToken);
     return { user: result.user, token: idToken };
   };
@@ -87,6 +92,7 @@ export const FirebaseProvider = ({ children }) => {
     const idToken = await result.user.getIdToken(true);
     const userName = result.user.displayName || "User";
     setUser(userName);
+    setUid(result.user.uid);
     setToken(idToken);
     return { user: result.user, token: idToken };
   };
@@ -95,9 +101,9 @@ export const FirebaseProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, async (currentUser) => {
       if (currentUser) {
-        // Only set user if not already set
         const userName = currentUser.displayName || "User";
         setUser(userName);
+        setUid(currentUser.uid);
 
         const idToken = await currentUser.getIdToken(true);
         setToken(idToken);
@@ -108,10 +114,8 @@ export const FirebaseProvider = ({ children }) => {
           const data = await res.json();
           const fetchedRole = data.userType;
 
-          // Only navigate if role is being set for the first time
           setRole(prevRole => {
             if (!prevRole && fetchedRole) {
-              // Role is being set for first time, navigate based on role
               if (fetchedRole === "patient") navigate("/patient-dashboard");
               else if (fetchedRole === "admin") navigate("/admin-dashboard");
               else if (fetchedRole === "doctor") navigate("/doctor-dashboard");
@@ -127,18 +131,22 @@ export const FirebaseProvider = ({ children }) => {
         setUser(null);
         setRole(null);
         setToken(null);
+        setUid(null);
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, [BASEURL]);
+
   return (
     <FirebaseContext.Provider
       value={{
         user,
+        uid,
         role,
         token,
+        loading,
         setUser,
         signup,
         login,
@@ -152,5 +160,5 @@ export const FirebaseProvider = ({ children }) => {
   );
 };
 
-// --- Custom Hook ---
+// --- Custom Hook --- 
 export const useAuth = () => useContext(FirebaseContext);
