@@ -7,9 +7,10 @@ import {
   OAuthProvider,
   signInWithPopup,
   onAuthStateChanged,
+  getAuth,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 // --- Firebase Config ---
 const firebaseConfig = {
@@ -31,25 +32,48 @@ const FirebaseContext = createContext();
 export const FirebaseProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+  const BASEURL = import.meta.env.VITE_API_BASE_URL;
 
   // --- Email/Password ---
-  const signup = (email, password) => {
-    return createUserWithEmailAndPassword(firebaseAuth, email, password);
+  const signup = async (email, password) => {
+    const res = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+    const idToken = await res.user.getIdToken(true);
+    setToken(idToken);
+    const userName = res.user.displayName || "User";
+    setUser(userName);
+    return res;
   };
 
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(firebaseAuth, email, password);
+  const login = async (email, password) => {
+    const res = await signInWithEmailAndPassword(firebaseAuth, email, password);
+    const idToken = await res.user.getIdToken(true);
+    setToken(idToken);
+    const userName = res.user.displayName || "User";
+    setUser(userName);
+    return res;
   };
 
-  const logout = () => {
+  const logout = async () => {
     setRole(null);
-    return signOut(firebaseAuth);
+    setToken(null);
+    setUser(null);
+    await signOut(firebaseAuth);
+    navigate("/"); // redirect to home or login after logout
   };
 
   // --- Google Login ---
-  const googleLogin = () => {
+  const googleLogin = async () => {
     const provider = new GoogleAuthProvider();
-    return signInWithPopup(firebaseAuth, provider);
+    const result = await signInWithPopup(firebaseAuth, provider);
+    const idToken = await result.user.getIdToken(true);
+    const userName = result.user.displayName || "User";
+    setUser(userName);
+    setToken(idToken);
+    return { user: result.user, token: idToken };
   };
 
   // --- Apple Login ---
@@ -57,50 +81,71 @@ export const FirebaseProvider = ({ children }) => {
     const provider = new OAuthProvider("apple.com");
     provider.addScope("email");
     provider.addScope("name");
-    provider.setCustomParameters({
-      locale: "en",
-    });
-    return signInWithPopup(firebaseAuth, provider)
-      .then((result) => {
-        // User info
-        const credential = OAuthProvider.credentialFromResult(result);
-        const token = credential?.idToken;
-        const user = result.user;
+    provider.setCustomParameters({ locale: "en" });
 
-        console.log("Apple login success:", user);
-        return { user, token };
-      })
-      .catch((error) => {
-        console.error("Apple login error:", error);
-        throw error;
-      });
-  }
+    const result = await signInWithPopup(firebaseAuth, provider);
+    const idToken = await result.user.getIdToken(true);
+    const userName = result.user.displayName || "User";
+    setUser(userName);
+    setToken(idToken);
+    return { user: result.user, token: idToken };
+  };
 
-  // --- Track User State ---
+  // --- Track Auth State & Fetch Role ---
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, async (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
+        // Only set user if not already set
+        const userName = currentUser.displayName || "User";
+        setUser(userName);
 
-        // try {
-        //   // Fetch role from MongoDB
-        //   const res = await axios.get(`http://localhost:5000/api/user/${currentUser.uid}`);
-        //   setRole(res.data.userType);
-        // } catch (err) {
-        //   console.error("Error fetching role:", err);
-        //   setRole(null);
-        // }
+        const idToken = await currentUser.getIdToken(true);
+        setToken(idToken);
+
+        // Fetch role
+        try {
+          const res = await fetch(`${BASEURL}/users/getUserRole?uid=${currentUser.uid}`);
+          const data = await res.json();
+          const fetchedRole = data.userType;
+
+          // Only navigate if role is being set for the first time
+          setRole(prevRole => {
+            if (!prevRole && fetchedRole) {
+              // Role is being set for first time, navigate based on role
+              if (fetchedRole === "patient") navigate("/patient-dashboard");
+              else if (fetchedRole === "admin") navigate("/admin-dashboard");
+              else if (fetchedRole === "doctor") navigate("/doctor-dashboard");
+              else if (fetchedRole === "staff") navigate("/staff-dashboard");
+              else navigate("/");
+            }
+            return fetchedRole;
+          });
+        } catch (error) {
+          console.error("Error fetching user role:", error);
+        }
       } else {
         setUser(null);
         setRole(null);
+        setToken(null);
       }
+      setLoading(false);
     });
-    return () => unsubscribe();
-  }, []);
 
+    return () => unsubscribe();
+  }, [BASEURL]);
   return (
     <FirebaseContext.Provider
-      value={{ user, role, signup, login, logout, googleLogin, appleLogin }}
+      value={{
+        user,
+        role,
+        token,
+        setUser,
+        signup,
+        login,
+        logout,
+        googleLogin,
+        appleLogin,
+      }}
     >
       {children}
     </FirebaseContext.Provider>
@@ -108,6 +153,4 @@ export const FirebaseProvider = ({ children }) => {
 };
 
 // --- Custom Hook ---
-export const useAuth = () => {
-  return useContext(FirebaseContext);
-};
+export const useAuth = () => useContext(FirebaseContext);
