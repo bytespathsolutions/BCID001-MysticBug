@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import admin from "firebase-admin";
-import { usersRouter, appointmentsRouter, medicalRouter } from "./routes/users.js";
+import { usersRoutes, appointmentsRoutes, medicalRoutes, patientRoutes } from "./routes/users.js";
 import { dbConn } from "./config/dbconnection.js";
 
 dotenv.config();
@@ -27,9 +27,10 @@ console.log("Firebase Admin Initialized ✅");
 
 // Routes
 app.use("/uploads", express.static("uploads"));
-app.use("/api/users", usersRouter);
-app.use("/api/appointments", appointmentsRouter);
-app.use("/api/medical_records", medicalRouter);
+app.use("/api/users", usersRoutes);
+app.use("/api/appointments", appointmentsRoutes);
+app.use("/api/medical_records", medicalRoutes);
+app.use("/api/patient", patientRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));

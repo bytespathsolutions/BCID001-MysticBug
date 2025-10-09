@@ -5,12 +5,13 @@ import { MedicalRecord } from "../models/medical.js";
 import multer from "multer";
 
 
-export const usersRouter = express.Router();
-export const appointmentsRouter = express.Router();
-export const medicalRouter = express.Router();
+export const usersRoutes = express.Router();
+export const appointmentsRoutes = express.Router();
+export const medicalRoutes = express.Router();
+export const patientRoutes = express.Router();
 
 // --- Register User ---
-usersRouter.post("/register", async (req, res) => {
+usersRoutes.post("/register", async (req, res) => {
   const { uid, email, userType, name } = req.body;
 
   try {
@@ -36,7 +37,7 @@ usersRouter.post("/register", async (req, res) => {
 });
 
 // --- Get User Role ---
-usersRouter.get("/getUserRole", async (req, res) => {
+usersRoutes.get("/getUserRole", async (req, res) => {
   try {
     const { uid } = req.query;
     if (!uid) {
@@ -56,7 +57,7 @@ usersRouter.get("/getUserRole", async (req, res) => {
 });
 
 // --- Create Appointment ---
-appointmentsRouter.post("/", async (req, res) => {
+appointmentsRoutes.post("/", async (req, res) => {
   try {
     const { patientName, reason, doctor, date, timeSlot } = req.body;
     if (!date || !timeSlot || !reason) {
@@ -74,7 +75,7 @@ appointmentsRouter.post("/", async (req, res) => {
 });
 
 // --- Get Appointments in Date Range ---
-appointmentsRouter.get("/", async (req, res) => {
+appointmentsRoutes.get("/", async (req, res) => {
   try {
     const { start, end } = req.query;
     if (!start || !end) {
@@ -93,7 +94,7 @@ appointmentsRouter.get("/", async (req, res) => {
 });
 
 // medical records
-medicalRouter.get('/', async (req, res) => {
+medicalRoutes.get('/', async (req, res) => {
   try {
     const records = await MedicalRecord.find().sort({ createdAt: -1 });
     res.json(records);
@@ -125,7 +126,7 @@ const upload = multer({
 });
 
 // POST /medical_records
-medicalRouter.post("/", upload.single("file"), async (req, res) => {
+medicalRoutes.post("/", upload.single("file"), async (req, res) => {
   try {
     const { name, email } = req.body;
     const scannedPdf = req.file ? req.file.filename : null;
@@ -143,3 +144,62 @@ medicalRouter.post("/", upload.single("file"), async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// Dummy data for now
+const dummyPrescriptions = [
+  {
+    name: "dummy",
+    email: "dummy@gmail.com",
+    pdf: "https://via.placeholder.com/150",
+  },
+  {
+    name: "dummy",
+    email: "dummy@gmail.com",
+    pdf: "https://via.placeholder.com/150",
+  },
+];
+
+const dummyMedicalRecords = [
+  {
+    name: "dummy",
+    email: "dummy@gmail.com",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "dummy",
+    email: "dummy@gmail.com",
+    image: "https://via.placeholder.com/150",
+  },
+];
+
+patientRoutes.get('/get_patient_record/:uid', async (req, res) => {
+  try {
+    const { uid } = req.params;
+    // ✅ Dummy response for now
+    res.status(200).json({
+      success: true,
+      prescriptions: dummyPrescriptions,
+      medicalRecords: dummyMedicalRecords,
+    });
+
+    /*
+    // 🔒 Later: Use actual doctor schema to fetch records by patient UID 
+
+    const doctor = await Doctor.findOne({ "patients.uid": uid });
+
+    if (!doctor) {
+      return res.status(404).json({ success: false, message: "Doctor not found" });
+    }
+
+    // Filter prescriptions and records for the given UID
+    const patientData = doctor.patients.find(p => p.uid === uid);
+    res.status(200).json({
+      success: true,
+      prescriptions: patientData.prescriptions,
+      medicalRecords: patientData.medicalRecords,
+    });
+    */
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+})
