@@ -1,9 +1,13 @@
 import express from "express";
 import { User } from "../models/user.js";
 import { Appointment } from "../models/Appointment.js";
+import { MedicalRecord } from "../models/medical.js";
+import multer from "multer";
+
 
 export const usersRouter = express.Router();
 export const appointmentsRouter = express.Router();
+export const medicalRouter = express.Router();
 
 // --- Register User ---
 usersRouter.post("/register", async (req, res) => {
@@ -85,5 +89,57 @@ appointmentsRouter.get("/", async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// medical records
+medicalRouter.get('/', async (req, res) => {
+  try {
+    const records = await MedicalRecord.find().sort({ createdAt: -1 });
+    res.json(records);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+})
+
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === "application/pdf") {
+      cb(null, true);
+    } else {
+      cb(new Error("Only PDF files are allowed!"), false);
+    }
+  }
+});
+
+// POST /medical_records
+medicalRouter.post("/", upload.single("file"), async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const scannedPdf = req.file ? req.file.filename : null;
+
+    if (!name || !email || !scannedPdf) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const record = new MedicalRecord({ name, email, scannedPdf });
+    await record.save();
+
+    res.status(201).json({ message: "Medical record uploaded successfully", record });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 });
