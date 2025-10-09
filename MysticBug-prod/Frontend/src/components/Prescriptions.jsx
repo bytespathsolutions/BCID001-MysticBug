@@ -1,14 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { images } from "../assets/assets"
+import { images } from "../assets/assets";
+import { useAuth } from "../Context/AuthContext";
+
 const Prescriptions = ({ onClose }) => {
+  const { uid, loading } = useAuth();
+  const [medicalRecords, setMedicalRecords] = useState([]);
+  const [prescriptions, setPrescriptions] = useState([]);
   const navigate = useNavigate();
-  const medicalRecords = [
-    { id: 1, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 2, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 3, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 4, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-  ];
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      if (loading) return;
+
+      try {
+        const response = await fetch(`${BASE_URL}/patient/get_patient_record/${uid}`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        setMedicalRecords(data.medicalRecords || []);
+        setPrescriptions(data.prescriptions || []);
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+      }
+    };
+
+    fetchPatientData();
+  }, [uid, loading, BASE_URL]);
 
   return (
     <div>
@@ -26,18 +49,22 @@ const Prescriptions = ({ onClose }) => {
               &times;
             </button>
           </div>
+          {loading && (
+            <div className="text-white text-center p-4">
+              Loading...
+            </div>
+          )}
+
           <div className="grid grid-cols-2 sm:px-10 sm:grid-cols-5 gap-6 sm:gap-0">
-            {/* later map the data */}
-            {medicalRecords.map((record) => (
-              <div className="p-2 flex flex-col gap-2 h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]" key={record.id}>
+            {prescriptions.map((record, index) => (
+              <div className="p-2 flex flex-col gap-2 h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]" key={record.id || index}>
                 <p>{record.name}</p>
                 <p>{record.email}</p>
                 <img src={record.pdf} alt={record.name} className="h-full w-full object-cover rounded-2xl" />
               </div>
             ))}
             <div className="p-2 flex flex-col h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]">
-              <div
-                className="flex justify-center items-center h-full w-full bg-[#D9D9D9] rounded-full">
+              <div className="flex justify-center items-center h-full w-full bg-[#D9D9D9] rounded-full">
                 <span className="text-7xl">+</span>
               </div>
             </div>
@@ -51,22 +78,19 @@ const Prescriptions = ({ onClose }) => {
             </div>
           </div>
           <div className="grid grid-cols-2 sm:px-10 sm:grid-cols-5 gap-6 sm:gap-0">
-            {/* later map the data */}
-            {medicalRecords.map((record) => (
-              <div className="p-2 flex flex-col gap-2 h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]" key={record.id}>
+            {medicalRecords.map((record, index) => (
+              <div className="p-2 flex flex-col gap-2 h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]" key={record.id || index}>
                 <p>{record.name}</p>
                 <p>{record.email}</p>
                 <img src={record.pdf} alt={record.name} className="h-full w-full object-cover rounded-2xl" />
               </div>
             ))}
             <div className="p-2 flex flex-col h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]">
-              <div
-                className="flex justify-center items-center h-full w-full bg-[#D9D9D9] rounded-full">
+              <div className="flex justify-center items-center h-full w-full bg-[#D9D9D9] rounded-full">
                 <span className="text-7xl">+</span>
               </div>
             </div>
           </div>
-
 
           <div className="hidden sm:flex items-center absolute bottom-[-10px] right-0 w-48 h-45">
             <img
@@ -78,7 +102,7 @@ const Prescriptions = ({ onClose }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Prescriptions;
