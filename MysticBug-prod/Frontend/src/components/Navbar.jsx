@@ -4,10 +4,12 @@ import { CiMenuBurger } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { images } from "../assets/assets"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../Context/AuthContext"
 const Navbar = ({ navBG, searchBarColor }) => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
-  const user = { name: "Patient Name" };// get actual user from context hook
+  const { user, logout } = useAuth();
+
   return (
     <header className="fixed top-0 left-0 right-0 w-full h-19 text-white flex items-center justify-between px-4 sm:px-14 py-3 z-50 shadow-md"
       style={{ backgroundColor: navBG ? navBG : null }}
@@ -40,9 +42,19 @@ const Navbar = ({ navBG, searchBarColor }) => {
           <a href="/emergency" className=" font-normal ">Emergency</a>
           <a href="/diseases" className=" font-normal ">Diseases</a>
           <a href="/contactus" className=" font-normal ">Contact Us</a>
-          <a href="/login" className="flex items-center gap-1  font-normal ">
-            {user ? <span>{user.name}</span> : "log in"}<FaUserCircle size={20} />
-          </a>
+          <div className="relative group">
+            <button className="flex items-center gap-1 font-normal focus:outline-none">
+              {user ? <span>{user}</span> : "Log in"} <FaUserCircle size={20} />
+            </button>
+            <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200">
+              <button
+                onClick={logout}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
         </nav>
       </div>
 
