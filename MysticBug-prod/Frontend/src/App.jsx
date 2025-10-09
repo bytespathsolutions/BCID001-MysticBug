@@ -18,13 +18,24 @@ const App = () => {
         <Route path='/investor-login' element={<InvestorLogin />} />
         <Route path='/admin-login' element={<AdminLogin />} />
         <Route path='/forgot-password' element={<OtpReset />} />
+
+        {/* Put specific route BEFORE general route */}
+        <Route
+          path="/patient-dashboard/upload-medical-records"
+          element={
+            <ProtectedRoute allowedRole="patient">
+              <UploadMedicalRecords />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path='/patient-dashboard'
           element={
             <ProtectedRoute allowedRole="patient">
               <PatientDashboard />
-            </ProtectedRoute>} />
-        <Route path='/upload-medical-records' element={<UploadMedicalRecords />} />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   )
