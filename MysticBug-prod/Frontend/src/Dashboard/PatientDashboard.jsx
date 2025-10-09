@@ -6,10 +6,12 @@ import MedicalRecords from '../components/MedicalRecords'
 import Prescriptions from '../components/Prescriptions'
 import Reminders from '../components/Reminders'
 import Monitoring from '../components/Monitoring'
-
+import { useAuth } from '../Context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 const PatientDashboard = () => {
   const [selectedCard, setSelectedCard] = useState(null)
-
+  const { user } = useAuth()
+  const navigate = useNavigate()
   const cardsData = [
     { id: 1, src: images.Appointments, title: "Appointments" },
     { id: 2, src: images.Medical_Records, title: "Medical Records" },
@@ -17,6 +19,13 @@ const PatientDashboard = () => {
     { id: 4, src: images.Reminders, title: "Reminders" },
     { id: 5, src: images.Monitoring, title: "Monitoring" }
   ]
+
+  const handleNavigateToUpload = () => {
+    setSelectedCard(null);
+    setTimeout(() => {
+      navigate("/patient-dashboard/upload-medical-records");
+    }, 50);
+  };
 
   return (
     <div className='bg-[#76b1c1] h-full min-h-screen relative overflow-auto sm:overflow-hidden'>
@@ -26,7 +35,7 @@ const PatientDashboard = () => {
         <div className='bg-transparent rounded-xl p-6'>
           <div className='flex justify-between items-center mb-6'>
             <h1 className='font-merriweather text-36 font-bold'>
-              Welcome Back, PatientName
+              Welcome Back, {user || "Guest"}
             </h1>
             <p className='font-lato text-16 font-bold'>
               Doctors Active: XX
@@ -70,7 +79,11 @@ const PatientDashboard = () => {
 
         {/* Modal */}
         {selectedCard && (
-          selectedCard.id === 1 ? <AppointmentsModal onClose={() => setSelectedCard(null)} /> : selectedCard.id === 2 ? <MedicalRecords onClose={() => setSelectedCard(null)} /> :
+          selectedCard.id === 1 ? <AppointmentsModal onClose={() => setSelectedCard(null)} /> : selectedCard.id === 2 ?
+            <MedicalRecords
+              onClose={() => setSelectedCard(null)}
+              onAddNew={handleNavigateToUpload}
+            /> :
             selectedCard.id === 3 ? <Prescriptions onClose={() => setSelectedCard(null)} /> :
               selectedCard.id === 4 ? <Reminders onClose={() => setSelectedCard(null)} /> :
                 selectedCard.id === 5 ? <Monitoring onClose={() => setSelectedCard(null)} /> :

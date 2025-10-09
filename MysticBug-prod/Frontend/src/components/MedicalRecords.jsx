@@ -1,18 +1,28 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { images } from "../assets/assets"
-const MedicalRecords = ({ onClose }) => {
-  const navigate = useNavigate();
-  const medicalRecords = [
-    { id: 1, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 2, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 3, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 4, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 5, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 6, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 7, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-    { id: 8, pdf: "localhost:3000", name: "dummy", email: "dummy@gmail.com" },
-  ];
+import { useNavigate } from "react-router-dom";
+const MedicalRecords = ({ onClose, onAddNew }) => {
+  const [medicalRecords, setMedicalRecords] = useState([]);
+  const navigate = useNavigate()
+  useEffect(() => {
+    const fetchMedicalRecords = async () => {
+      const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      try {
+        const res = await fetch(`${BASE_URL}/medical_records`);
+        if (!res.ok) throw new Error("Failed to fetch medical records");
+        const data = await res.json();
+        setMedicalRecords(data);
+      } catch (error) {
+        console.error("Error while fetching medical records:", error);
+      }
+    };
+
+    fetchMedicalRecords();
+  }, []);
+
+  const getDisplayName = (filename) => {
+    return filename.split('-')[1]
+  }
 
   return (
     <div>
@@ -31,19 +41,25 @@ const MedicalRecords = ({ onClose }) => {
             </button>
           </div>
           <div className="flex flex-col sm:flex-row items-center overflow-auto flex-wrap gap-4">
-            {/* later map the data */}
-            {medicalRecords.map((record) => (
-              <div className="p-2 flex flex-col gap-2 h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]" key={record.id}>
-                <p>{record.name}</p>
-                <p>{record.email}</p>
-                <img src={record.pdf} alt={record.name} className="h-full w-full object-cover rounded-2xl" />
+            {medicalRecords?.map((record) => (
+              <div className="p-2 flex flex-col gap-2 h-[200px] w-[250px] rounded-2xl bg-[#93d8c1]" key={record.id}>
+                <p className="w-full">{record.name}</p>
+                <p className="w-full">{record.email}</p>
+
+                <a
+                  href={`http://localhost:5000/uploads/${record.scannedPdf}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-full w-full object-cover rounded-2xl text-blue-800 cursor-pointer"
+                >
+                  {getDisplayName(record.scannedPdf)}
+                </a>
               </div>
             ))}
             <div className="p-2 flex flex-col gap-2 h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]">
               <div
                 className="flex justify-center items-center h-full w-full bg-[#D9D9D9] rounded-full">
-                <span
-                  onClick={() => navigate('/upload-medical-records')}
+                <span onClick={onAddNew}
                   className="text-7xl cursor-pointer">+</span>
               </div>
             </div>
@@ -61,7 +77,7 @@ const MedicalRecords = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
