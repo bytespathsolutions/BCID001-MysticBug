@@ -9,6 +9,7 @@ export const usersRoutes = express.Router();
 export const appointmentsRoutes = express.Router();
 export const medicalRoutes = express.Router();
 export const patientRoutes = express.Router();
+export const doctorRoutes = express.Router();
 
 // --- Register User ---
 usersRoutes.post("/register", async (req, res) => {
@@ -245,6 +246,21 @@ patientRoutes.get('/get_patient_record/:uid', async (req, res) => {
     });
     */
   } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+})
+
+doctorRoutes.get('/', async (req, res) => {
+  try {
+    const dummyDoctorsData = [
+      { id: 1, name: "A" },
+      { id: 2, name: "B" },
+      { id: 3, name: "C" },
+      { id: 4, name: "D" },
+      { id: 5, name: "E" },
+    ]
+    res.status(200).json({ doctors: dummyDoctorsData })
+  } catch (err) {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 })

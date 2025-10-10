@@ -29,12 +29,14 @@ const AppointmentsModal = ({ onClose }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [calendarStartDate, setCalendarStartDate] = useState(new Date());
   const [showForm, setShowForm] = useState(false);
+  const [doctorsData, setDoctorsData] = useState([])
 
   // Form state
   const [patientName, setPatientName] = useState("");
   const [reason, setReason] = useState("");
   const [doctor, setDoctor] = useState("");
   const [timeSlot, setTimeSlot] = useState(hours[0]);
+
 
   // loaded appointments for the week
   const [appointments, setAppointments] = useState([]);
@@ -126,6 +128,24 @@ const AppointmentsModal = ({ onClose }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+
+        setLoading(true);
+        const res = await fetch(`${BASE_URL}/doctors`);
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        setDoctorsData(data.doctors);
+      } catch (err) {
+        console.error("fetchAppointments error:", err);
+        setDoctorsData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDoctors()
+  }, [])
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
       <div className="bg-[#0a5b58] rounded-xl p-4 w-full max-w-6xl h-[96vh] relative">
@@ -271,15 +291,17 @@ const AppointmentsModal = ({ onClose }) => {
               </select>
 
               <label className="text-xs">DOCTOR</label>
-              <input
+              <select
                 value={doctor}
                 onChange={(e) => setDoctor(e.target.value)}
-                type="text"
-                id="doctor"
                 className="p-1 rounded bg-[#8ccdb8] mb-2 outline-none text-sm"
-                placeholder="Doctor name (optional)"
-              />
-
+                required
+              >
+                <option value="">select doctor</option>
+                {doctorsData.map((doctor) => (
+                  <option key={doctor.id || doctor.name} value={doctor.name}>{doctor.name}</option>
+                ))}
+              </select>
               <button
                 type="submit"
                 className="rounded bg-[#0a4f5b] py-2 text-white"
