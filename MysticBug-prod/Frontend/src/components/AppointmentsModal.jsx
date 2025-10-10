@@ -20,7 +20,6 @@ const hours = [
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 const formatDateYYYYMMDD = (d) => {
-  // returns YYYY-MM-DD
   const tzOffset = d.getTimezoneOffset() * 60000;
   const localISO = new Date(d - tzOffset).toISOString().slice(0, 10);
   return localISO;
@@ -254,6 +253,7 @@ const AppointmentsModal = ({ onClose }) => {
                 selected={calendarStartDate}
                 onChange={(date) => setCalendarStartDate(date)}
                 dateFormat={"dd/MM/yyyy"}
+                minDate={new Date()}
                 className="w-full p-1 rounded bg-[#8ccdb8] outline-none text-sm"
               />
 

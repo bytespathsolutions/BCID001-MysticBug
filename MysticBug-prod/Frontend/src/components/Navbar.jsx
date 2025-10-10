@@ -22,7 +22,7 @@ const Navbar = ({ navBG, searchBarColor }) => {
       {/* Desktop Nav   */}
       <div className="hidden md:flex items-center justify-between gap-6 flex-1">
         {/* Search */}
-        <div className="hidden lg:flex items-center w-[614px] h-[44px] rounded-full overflow-hidden" style={{ backgroundColor: searchBarColor ? searchBarColor : null }}>
+        <div className="hidden lg:flex items-center w-[614px] h-[44px] rounded-full border  border-gray-700 overflow-hidden" style={{ backgroundColor: searchBarColor ? searchBarColor : null }}>
           <select className="bg-[#00424f] text-gray-300 px-3 h-full border-none outline-none">
             <option>Search</option>
           </select>
@@ -43,17 +43,17 @@ const Navbar = ({ navBG, searchBarColor }) => {
           <a href="/diseases" className=" font-normal ">Diseases</a>
           <a href="/contactus" className=" font-normal ">Contact Us</a>
           <div className="relative group">
-            <button className="flex items-center gap-1 font-normal focus:outline-none">
+            <button onClick={() => navigate('/login')} className="flex items-center gap-1 font-normal focus:outline-none">
               {user ? <span>{user}</span> : "Log in"} <FaUserCircle size={20} />
             </button>
-            <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200">
+            {user && <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200">
               <button
                 onClick={logout}
                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
               >
                 Logout
               </button>
-            </div>
+            </div>}
           </div>
         </nav>
       </div>
