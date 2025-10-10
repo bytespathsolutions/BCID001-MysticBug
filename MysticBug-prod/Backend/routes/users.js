@@ -74,6 +74,50 @@ appointmentsRoutes.post("/", async (req, res) => {
   }
 });
 
+// --- Get Appointments ---
+appointmentsRoutes.get("/fetch-all-appointments", async (req, res) => {
+  try {
+    const now = new Date();
+
+    // Get today's date at midnight (start of day) for MongoDB query
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    // Fetch all appointments from today onwards
+    const appts = await Appointment.find({
+      date: { $gte: todayStart.toISOString().split('T')[0] }, // '2025-10-09' format
+    }).sort({ date: 1, timeSlot: 1 });
+
+    // Helper function to parse timeSlot (e.g., "8 AM", "2 PM") into hours
+    const parseTimeSlot = (timeSlot) => {
+      const [time, period] = timeSlot.split(' ');
+      let hours = parseInt(time);
+
+      if (period === 'PM' && hours !== 12) {
+        hours += 12;
+      } else if (period === 'AM' && hours === 12) {
+        hours = 0;
+      }
+
+      return hours;
+    };
+
+    // Filter out expired appointments
+    const activeAppointments = appts.filter((appt) => {
+      // Create a Date object from appointment date and timeSlot
+      const [year, month, day] = appt.date.split('-').map(Number);
+      const appointmentHour = parseTimeSlot(appt.timeSlot);
+
+      const appointmentDateTime = new Date(year, month - 1, day, appointmentHour, 0, 0);
+      return appointmentDateTime > now;
+    });
+
+    return res.json(activeAppointments);
+  } catch (err) {
+    console.error('Error fetching appointments:', err);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
 // --- Get Appointments in Date Range ---
 appointmentsRoutes.get("/", async (req, res) => {
   try {
@@ -92,6 +136,7 @@ appointmentsRoutes.get("/", async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // medical records
 medicalRoutes.get('/', async (req, res) => {
