@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { images } from "../assets/assets"
+import { images } from "../../assets/assets"
 const Monitoring = ({ onClose }) => {
   const [appointments, setAppointments] = useState([])
   const [medicalRecords, setMedicalRecords] = useState([])

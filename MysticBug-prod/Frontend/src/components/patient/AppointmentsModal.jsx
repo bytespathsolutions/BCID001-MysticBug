@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { images } from "../assets/assets";
+import { images } from "../../assets/assets";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 

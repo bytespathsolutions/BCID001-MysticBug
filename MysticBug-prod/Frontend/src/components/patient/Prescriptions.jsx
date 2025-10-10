@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { images } from "../assets/assets";
-import { useAuth } from "../Context/AuthContext";
+import { images } from "../../assets/assets";
+import { useAuth } from "../../Context/AuthContext";
 
 const Prescriptions = ({ onClose }) => {
   const { uid, loading } = useAuth();

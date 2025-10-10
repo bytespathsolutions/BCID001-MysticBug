@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { images } from "../assets/assets"
+import { images } from "../../assets/assets"
 import { useEffect, useState } from "react";
 const Reminders = ({ onClose }) => {
   const navigate = useNavigate();

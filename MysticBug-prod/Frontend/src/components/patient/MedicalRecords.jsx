@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { images } from "../assets/assets"
+import { images } from "../../assets/assets"
 import { useNavigate } from "react-router-dom";
 const MedicalRecords = ({ onClose, onAddNew }) => {
   const [medicalRecords, setMedicalRecords] = useState([]);
