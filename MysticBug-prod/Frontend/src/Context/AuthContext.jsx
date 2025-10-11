@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -36,6 +36,9 @@ export const FirebaseProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Track if we should navigate after role is set
+  const shouldNavigateToRole = useRef(false);
+
   const navigate = useNavigate();
   const BASEURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -47,6 +50,7 @@ export const FirebaseProvider = ({ children }) => {
     setUid(res.user.uid);
     const userName = res.user.displayName || "User";
     setUser(userName);
+    shouldNavigateToRole.current = true; // Mark for navigation after role fetch
     return res;
   };
 
@@ -57,6 +61,7 @@ export const FirebaseProvider = ({ children }) => {
     setUid(res.user.uid);
     const userName = res.user.displayName || "User";
     setUser(userName);
+    shouldNavigateToRole.current = true; // Mark for navigation after role fetch
     return res;
   };
 
@@ -65,6 +70,7 @@ export const FirebaseProvider = ({ children }) => {
     setToken(null);
     setUser(null);
     setUid(null);
+    shouldNavigateToRole.current = false;
     await signOut(firebaseAuth);
     navigate("/");
   };
@@ -78,6 +84,7 @@ export const FirebaseProvider = ({ children }) => {
     setUser(userName);
     setUid(result.user.uid);
     setToken(idToken);
+    shouldNavigateToRole.current = true; // Mark for navigation after role fetch
     return { user: result.user, token: idToken };
   };
 
@@ -94,6 +101,7 @@ export const FirebaseProvider = ({ children }) => {
     setUser(userName);
     setUid(result.user.uid);
     setToken(idToken);
+    shouldNavigateToRole.current = true; // Mark for navigation after role fetch
     return { user: result.user, token: idToken };
   };
 
@@ -113,17 +121,7 @@ export const FirebaseProvider = ({ children }) => {
           const res = await fetch(`${BASEURL}/users/getUserRole?uid=${currentUser.uid}`);
           const data = await res.json();
           const fetchedRole = data.userType;
-
-          setRole(prevRole => {
-            if (!prevRole && fetchedRole) {
-              if (fetchedRole === "patient") navigate("/patient-dashboard");
-              else if (fetchedRole === "admin") navigate("/admin-dashboard");
-              else if (fetchedRole === "doctor") navigate("/doctor-dashboard");
-              else if (fetchedRole === "staff") navigate("/staff-dashboard");
-              else navigate("/");
-            }
-            return fetchedRole;
-          });
+          setRole(fetchedRole);
         } catch (error) {
           console.error("Error fetching user role:", error);
         }
@@ -132,12 +130,27 @@ export const FirebaseProvider = ({ children }) => {
         setRole(null);
         setToken(null);
         setUid(null);
+        shouldNavigateToRole.current = false;
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, [BASEURL]);
+
+  // --- Handle Navigation Based on Role (separate effect) ---
+  useEffect(() => {
+    // Only navigate if we have a role AND the flag is set
+    if (role && shouldNavigateToRole.current) {
+      shouldNavigateToRole.current = false; // Reset flag immediately
+
+      if (role === "patient") navigate("/patient-dashboard");
+      else if (role === "admin") navigate("/admin-dashboard");
+      else if (role === "doctor") navigate("/doctor-dashboard");
+      else if (role === "investor") navigate("/investor-dashboard");
+      else navigate("/");
+    }
+  }, [role, navigate]);
 
   return (
     <FirebaseContext.Provider
