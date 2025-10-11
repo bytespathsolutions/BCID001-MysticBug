@@ -3,12 +3,19 @@ import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { images } from "../assets/assets"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useAuth } from "../Context/AuthContext"
+
 const Navbar = ({ navBG, searchBarColor }) => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, role } = useAuth();
+
+  // Function to get dashboard path based on role
+  const getDashboardPath = () => {
+    if (!role) return "/";
+    return `/${role}-dashboard`;
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 w-full h-19 text-white flex items-center justify-between px-4 sm:px-14 py-3 z-50 shadow-md"
@@ -36,14 +43,18 @@ const Navbar = ({ navBG, searchBarColor }) => {
           </button>
         </div>
 
-        {/* Links */}
-        <nav className="flex items-center gap-6 text-[#000000]">
-          <a href="/aboutus" className=" font-normal ">About Us</a>
-          <a href="/emergency" className=" font-normal ">Emergency</a>
-          <a href="/diseases" className=" font-normal ">Diseases</a>
-          <a href="/contactus" className=" font-normal ">Contact Us</a>
+        {/* Links - CHANGED FROM <a href> TO <Link to> */}
+        <nav className="flex items-center gap-4 text-[#000000] whitespace-nowrap">
+          {user && <Link to={getDashboardPath()}>Dashboard</Link>}
+          <Link to="/aboutus" className="font-normal">About Us</Link>
+          <Link to="/emergency" className="font-normal">Emergency</Link>
+          <Link to="/diseases" className="font-normal">Diseases</Link>
+          <Link to="/contactus" className="font-normal">Contact Us</Link>
           <div className="relative group">
-            <button onClick={() => navigate('/login')} className="flex items-center gap-1 font-normal focus:outline-none">
+            <button
+              onClick={user ? null : () => navigate('/login')}
+              className="flex items-center gap-1 font-normal focus:outline-none"
+            >
               {user ? <span>{user}</span> : "Log in"} <FaUserCircle size={20} />
             </button>
             {user && <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200">
@@ -75,20 +86,53 @@ const Navbar = ({ navBG, searchBarColor }) => {
         )}
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Dropdown - CHANGED FROM <a href> TO <Link to> */}
       {
         showMenu && (
           <nav className="absolute top-full left-0 w-full bg-white text-[#000000] shadow-md flex flex-col items-start gap-4 px-6 py-4 lg:hidden z-50 font-lato">
-            <a onClick={() => setShowMenu(!showMenu)} href="/aboutus" className=" font-normal">About Us</a>
-            <a onClick={() => setShowMenu(!showMenu)} href="/emergency" className=" font-normal">Emergency</a>
-            <a onClick={() => setShowMenu(!showMenu)} href="/diseases" className=" font-normal">Diseases</a>
-            <a onClick={() => setShowMenu(!showMenu)} href="/contactus" className=" font-normal ">Contact Us</a>
-            <a onClick={() => setShowMenu(!showMenu)} href="/login" className="flex items-center gap-1  font-normal ">
-              Log In <FaUserCircle size={20} />
-            </a>
+            {user && (
+              <Link
+                className="font-normal"
+                onClick={() => setShowMenu(!showMenu)}
+                to={getDashboardPath()}
+              >
+                Dashboard
+              </Link>
+            )}
+            <Link onClick={() => setShowMenu(!showMenu)} to="/aboutus" className="font-normal">About Us</Link>
+            <Link onClick={() => setShowMenu(!showMenu)} to="/emergency" className="font-normal">Emergency</Link>
+            <Link onClick={() => setShowMenu(!showMenu)} to="/diseases" className="font-normal">Diseases</Link>
+            <Link onClick={() => setShowMenu(!showMenu)} to="/contactus" className="font-normal">Contact Us</Link>
+
+            <div className="relative group">
+              <button
+                onClick={user ? null : () => {
+                  navigate('/login');
+                  setShowMenu(false)
+                }}
+                className="flex items-center gap-1 font-normal focus:outline-none"
+              >
+                {user ? <span>{user}</span> : "Log in"} <FaUserCircle size={20} />
+              </button>
+
+              {user && (
+                <div className="absolute right-15 mt-2 w-32 bg-white border border-gray-300 rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200">
+                  <button
+                    onClick={() => {
+                      logout();
+                      setShowMenu(false);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </nav>
         )
       }
+
     </header >
   );
 };
