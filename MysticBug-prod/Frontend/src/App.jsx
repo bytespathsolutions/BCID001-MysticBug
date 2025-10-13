@@ -1,5 +1,5 @@
 import Login from './default-pages/Login'
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom"
 import OtpReset from './pages/OtpReset'
 import AdminLogin from './pages/AdminLogin'
 import InvestorLogin from './pages/InvestorLogin'
@@ -18,11 +18,34 @@ import Terms from './default-pages/Terms'
 import PrivacyPolicy from './default-pages/PrivacyPolicy'
 import NotFound from './default-pages/NotFound'
 const App = () => {
+  const location = useLocation();
+
+  // Hide both Navbar & Footer
+  const hideBothPaths = [
+    "/login",
+    "/patient-login",
+    "/doctor-login",
+    "/investor-login",
+    "/admin-login"
+  ];
+
+  // Hide only Footer (for dashboards)
+  const hideFooterPaths = [
+    "/patient-dashboard",
+    "/admin-dashboard",
+    "/doctor-dashboard",
+    "/investor-dashboard"
+  ];
+
+  const hideNavbar = hideBothPaths.some(path => location.pathname.startsWith(path));
+  const hideFooter = hideBothPaths.some(path => location.pathname.startsWith(path)) ||
+    hideFooterPaths.some(path => location.pathname.startsWith(path));
+
   return (
     <div>
-      <div className="max-w-[1440px] mx-auto">
+      {!hideNavbar && (<div className="max-w-[1440px] mx-auto">
         <Navbar />
-      </div>
+      </div>)}
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/contactus" element={<ContactUs />} />
@@ -55,7 +78,7 @@ const App = () => {
           }
         />
       </Routes>
-      <Footer />
+      {!hideFooter && <Footer />}
     </div>
   )
 }
