@@ -51,14 +51,15 @@ const Monitoring = ({ onClose }) => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            {
+            {appointments.length ?
               appointments.map((appointment) => (
                 <div className="bg-[#93d8c1] rounded-lg p-4 text-center text-18 font-lato font-bold min-h-[100px] min-w-[260px] flex flex-col items-start ">
                   <h1>Name: {appointment.patientName}</h1>
                   <h1>reason: {appointment.reason}</h1>
                   <h1>time: {appointment.timeSlot}</h1>
                 </div>
-              ))}
+              )) :
+              <p className="bg-[#93d8c1] rounded-lg p-2 w-[220px]">No Next Appointment</p>}
           </div>
           <h2 className="text-white text-24 font-merriweather font-bold mt-4">Latest Records</h2>
           <div className="flex flex-col sm:flex-row flex-wrap gap-4">
@@ -83,10 +84,11 @@ const Monitoring = ({ onClose }) => {
           <div>
             <h2 className="text-white text-24 font-merriweather font-bold mt-4">Latest Reminders</h2>
             <div className="max-w-3xl bg-[#93d8c1] p-2 px-4 rounded-2xl flex justify-between items-center">
-              {
+              {appointments.length ?
                 appointments.map((appointment) => (
                   <p>{appointment.timeSlot}, {appointment.patientName}, {appointment.reason}</p>
-                ))}
+                )) :
+                <p>No latest Reminders</p>}
             </div>
           </div>
 
