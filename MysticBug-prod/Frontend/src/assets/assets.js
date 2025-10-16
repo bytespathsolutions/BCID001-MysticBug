@@ -24,7 +24,7 @@ import { FaRegClock } from "react-icons/fa";
 import { LuTablet } from "react-icons/lu";
 import { RiChatCheckLine } from "react-icons/ri";
 import { FaHandHoldingHeart } from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
+import { FiHome, FiThumbsDown, FiThumbsUp } from "react-icons/fi";
 import { BiBook } from "react-icons/bi";
 import bot from "../assets/homepage/bot.png"
 import redLight from "../assets/homepage/redLight.png"
@@ -41,7 +41,7 @@ import { MdOutlineMail } from "react-icons/md";
 import mail from "../assets/ContactPage/mail.png"
 import office from "../assets/ContactPage/office.png"
 import { CiLocationOn } from "react-icons/ci";
-import { IoCallOutline } from "react-icons/io5";
+import { IoCallOutline, IoThumbsUp } from "react-icons/io5";
 import mobile from "../assets/ContactPage/mobile.png"
 import Who_are_we from "../assets/Aboutus/Who_are_we.png"
 import clip_path_vertical from "../assets/Aboutus/clip_path_vertical.png"
@@ -62,7 +62,11 @@ import DiseaseBanner09 from "../assets/Disease/DiseaseBanner09.png"
 
 export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group, lower_clip, upper_clip, bottomWave, Appointments, Monitoring, Reminders, Medical_Records, Prescriptions, Medical_assistant, Admin, logo, }
 
-export const icons = { FaLeaf, FaGoogle, FaApple }
+export const icons = {
+  FaLeaf, FaGoogle, FaApple,
+  FiThumbsUp,
+  FiThumbsDown
+}
 
 
 export const default_page_icons = {
