@@ -37,7 +37,7 @@ const Prescriptions = ({ onClose }) => {
     <div>
       <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
         <div className="bg-[#0a5b58] rounded-xl p-4 w-full max-w-6xl h-[96vh] relative overflow-auto">
-          <div className="flex justify-between items-center mb-2">
+          <div className="w-full flex-wrap flex justify-between items-center mb-2">
             <div>
               <h2 className="text-[#CCE4FF] text-24 font-merriweather font-bold sm:ml-11">Prescriptions</h2>
               <h2 className="text-[#CCE4FF] font-lato font-bold sm:ml-11">Click on image to view</h2>
@@ -55,7 +55,7 @@ const Prescriptions = ({ onClose }) => {
             </div>
           )}
 
-          <div className="grid grid-cols-2 sm:px-10 sm:grid-cols-5 gap-6 sm:gap-0">
+          <div className="w-full grid grid-cols-2 sm:px-10 sm:grid-cols-5 gap-6 sm:gap-0">
             {prescriptions.map((record, index) => (
               <div className="p-2 flex flex-col gap-2 h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]" key={record.id || index}>
                 <p>{record.name}</p>
@@ -71,13 +71,13 @@ const Prescriptions = ({ onClose }) => {
           </div>
 
           {/* Past medical Records */}
-          <div className="flex justify-between items-center mt-4 mb-2">
+          <div className="w-full flex-wrap flex justify-between items-center mt-4 mb-2">
             <div>
               <h2 className="text-[#CCE4FF] text-24 font-merriweather font-bold sm:ml-11">Past Medical Records</h2>
               <h2 className="text-[#CCE4FF] font-lato font-bold sm:ml-11">Click on image to view</h2>
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:px-10 sm:grid-cols-5 gap-6 sm:gap-0">
+          <div className="w-full grid grid-cols-2 sm:px-10 sm:grid-cols-5 gap-6 sm:gap-0">
             {medicalRecords.map((record, index) => (
               <div className="p-2 flex flex-col gap-2 h-[200px] w-[200px] rounded-2xl bg-[#93d8c1]" key={record.id || index}>
                 <p>{record.name}</p>

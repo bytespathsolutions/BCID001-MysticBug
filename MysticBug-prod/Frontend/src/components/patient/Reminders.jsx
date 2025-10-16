@@ -39,7 +39,7 @@ const Reminders = ({ onClose }) => {
           </div>
           <div>
             {appointments.length > 0 ? (
-              <ul className="flex flex-col gap-4 px-12">
+              <ul className="h-[75vh] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 rounded-lg space-y-2">
                 {appointments.map((record) => (
                   <div
                     key={record._id}
