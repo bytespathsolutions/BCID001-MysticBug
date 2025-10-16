@@ -13,7 +13,7 @@ const AppointmentSchema = new mongoose.Schema({
     default: ''
   },
   date: {
-    type: String,
+    type: Date,
     required: true
   },
   timeSlot: {
