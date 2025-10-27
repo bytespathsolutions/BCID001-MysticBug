@@ -9,8 +9,8 @@ const PatientLogin = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
   const { userType } = location?.state || {};
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL

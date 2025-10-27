@@ -29,7 +29,7 @@ const PatientDashboard = () => {
 
   return (
     <div className='bg-[#76b1c1] h-full min-h-screen relative overflow-auto sm:overflow-hidden'>
-      <Navbar navBG="#76b1c1" searchBarColor="#93d8c1" />
+      <Navbar searchBarColor="#93d8c1" />
 
       <div className='absolute top-20 p-6 w-full'>
         <div className='bg-transparent rounded-xl p-6'>

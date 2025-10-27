@@ -6,7 +6,7 @@ import { images } from "../assets/assets"
 import { useNavigate, Link } from "react-router-dom"
 import { useAuth } from "../Context/AuthContext"
 
-const Navbar = ({ navBG, searchBarColor }) => {
+const Navbar = ({ navBG = 'transparent', searchBarColor = '#93ced8', searchSelectorColor = '#0a4f5b' }) => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
   const { user, logout, role } = useAuth();
@@ -30,9 +30,13 @@ const Navbar = ({ navBG, searchBarColor }) => {
       <div className="hidden md:flex items-center justify-between gap-6 flex-1">
         {/* Search */}
         <div className="hidden lg:flex items-center w-[614px] h-[44px] rounded-full border  border-gray-700 overflow-hidden" style={{ backgroundColor: searchBarColor ? searchBarColor : null }}>
-          <select className="bg-[#00424f] text-gray-300 px-3 h-full border-none outline-none">
+          <select
+            className="text-gray-300 px-3 h-full border-none outline-none"
+            style={{ backgroundColor: searchSelectorColor ? searchSelectorColor : null }}
+          >
             <option>Search</option>
           </select>
+
           <input
             type="text"
             placeholder="Type Here"
