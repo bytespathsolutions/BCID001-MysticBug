@@ -4,6 +4,12 @@ const AppointmentSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  patientId: {
+    type: String,
+  },
+  age: {
+    type: Number,
+  },
   reason: {
     type: String,
     required: true
@@ -19,6 +25,11 @@ const AppointmentSchema = new mongoose.Schema({
   timeSlot: {
     type: String,
     required: true
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'confirmed', 'rejected'],
+    default: 'pending'
   },
   createdAt: {
     type: Date,
