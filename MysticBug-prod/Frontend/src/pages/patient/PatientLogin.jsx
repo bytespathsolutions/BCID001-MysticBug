@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { icons, images } from '../assets/assets'
+import { icons, images } from '../../assets/assets'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { firebaseAuth, useAuth } from '../Context/AuthContext'
+import { firebaseAuth, useAuth } from '../../Context/AuthContext'
 
 const PatientLogin = () => {
   const [inputName, setInputName] = useState('')
@@ -14,12 +14,20 @@ const PatientLogin = () => {
   const { userType } = location?.state || {};
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL
+  const { login, signup, googleLogin, appleLogin, setUser, setRoleDirectly } = useAuth();
 
-  const { signup, googleLogin, appleLogin, setUser } = useAuth();
 
-  // Register user in MongoDB
+  // Register user in MongoDB (only for new users)
   const registerInMongoDB = async (uid, email, userType, name) => {
+
     const token = await firebaseAuth.currentUser.getIdToken(true)
+
+    const requestBody = {
+      uid,
+      email,
+      userType,
+      name
+    };
 
     const response = await fetch(`${BASE_URL}/users/register`, {
       method: "POST",
@@ -27,15 +35,10 @@ const PatientLogin = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        uid,
-        email,
-        userType,
-        name
-      }),
+      body: JSON.stringify(requestBody),
     });
-
     const contentType = response.headers.get("content-type")
+
     let data;
 
     if (contentType && contentType.includes("application/json")) {
@@ -62,26 +65,38 @@ const PatientLogin = () => {
       setError("All fields are required")
       return
     }
-
     setLoading(true)
 
     try {
-      // Sign up to Firebase
-      const userCredential = await signup(email, password);
-
+      // --- Try login first ---
+      let userCredential
+      try {
+        userCredential = await login(email, password, userType);
+      } catch (error) {
+        if (
+          error.code === 'auth/user-not-found' ||
+          error.code === 'auth/invalid-credential' ||
+          error.code === 'auth/wrong-password'
+        ) {
+          // NEW USER → SIGNUP
+          userCredential = await signup(email, password, userType);
+        } else {
+          throw error;
+        }
+      }
       const currentUser = firebaseAuth.currentUser
+
       if (!currentUser) {
         throw new Error("Firebase user not found after signup")
       }
 
-      // Register in MongoDB
-      await registerInMongoDB(currentUser.uid, currentUser.email, userType, inputName)
-      console.log("User registered in MongoDB")
-      setUser(inputName)
+      const mongoResult = await registerInMongoDB(currentUser.uid, email, userType, inputName);
+      // Use role from MongoDB response - AuthContext will handle validation
+      if (mongoResult.user && mongoResult.user.userType) {
+        setRoleDirectly(mongoResult.user.userType, mongoResult.user.name);
+      }
 
     } catch (error) {
-      console.error("Error during registration:", error)
-
       let errorMessage = "Registration failed. Please try again."
 
       if (error.code === 'auth/email-already-in-use') {
@@ -106,18 +121,20 @@ const PatientLogin = () => {
     setLoading(true)
 
     try {
-      const result = await googleLogin()
-
+      const result = await googleLogin(userType)
       const user = result.user
       const userName = user.displayName || "User"
+
       setUser(userName);
+      const mongoResult = await registerInMongoDB(user.uid, user.email, userType, userName)
 
-      // Register in MongoDB
-      await registerInMongoDB(user.uid, user.email, userType, userName)
-
-      alert("Login successful! Welcome aboard!")
-      // navigate('/dashboard') // Uncomment to redirect
-
+      // MongoDB registration returns the user, set role directly
+      // AuthContext will handle validation
+      if (mongoResult.user && mongoResult.user.userType) {
+        setRoleDirectly(mongoResult.user.userType, mongoResult.user.name);
+      } else {
+        setRoleDirectly(userType, userName);
+      }
     } catch (error) {
       setError(error.message || "Google login failed. Please try again.")
     } finally {
@@ -125,40 +142,46 @@ const PatientLogin = () => {
     }
   }
 
+
   // Handle Apple Login
   const handleAppleLogin = async () => {
+
     setError(null)
     setLoading(true)
     try {
-      const result = await appleLogin()
-
+      const result = await appleLogin(userType)
       const user = result.user
       const userName = user.displayName || "User"
       setUser(userName);
+      const mongoResult = await registerInMongoDB(user.uid, user.email, userType, userName)
 
-      // Register in MongoDB
-      await registerInMongoDB(user.uid, user.email, userType, userName)
-
-      alert("Login successful! Welcome aboard!")
-      // navigate('/dashboard') // Uncomment to redirect
+      // MongoDB registration returns the user, set role directly
+      // AuthContext will handle validation
+      if (mongoResult.user && mongoResult.user.userType) {
+        setRoleDirectly(mongoResult.user.userType, mongoResult.user.name);
+      } else {
+        setRoleDirectly(userType, userName);
+      }
 
     } catch (error) {
-      setError(error.message || "Apple login failed. Please try again.")
+      setError(error.message || "Apple login failed. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+
 
   return (
     <div className='relative overflow-hidden h-screen'>
       <img
         src={images.upper_clip}
         alt="clipImage"
-        className='absolute top-0 pointer-events-none h-[500px] w-[1120px]' />
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center sm:justify-start px-4">
-        <div className="relative z-10 max-w-md sm:max-w-2xl w-full mt-20 sm:px-28">
+        className='absolute top-0 pointer-events-none h-[300px] w-full' />
+
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center sm:justify-start px-10">
+        <div className="relative z-10 max-w-md sm:max-w-2xl w-full mt-2 sm:px-28">
           <div className="text-start">
-            <h1 className="font-merriweather font-bold text-48 text-[#1B1B1B]">
+            <h1 className="font-merriweather font-bold text-48 text-[#1B1B1B] mt-6 sm:mt-0">
               Patient Sign Up
             </h1>
             <p className="font-lato font-normal text-base sm:text-18 flex items-center gap-2 whitespace-nowrap mb-2">
@@ -171,7 +194,7 @@ const PatientLogin = () => {
             )}
 
             {/* Form */}
-            <form onSubmit={handleForm} className="space-y-1.5 relative z-20">
+            <form onSubmit={handleForm} className="space-y-1 relative z-20">
               <div>
                 <label
                   htmlFor="name"
@@ -185,7 +208,7 @@ const PatientLogin = () => {
                   value={inputName}
                   onChange={(e) => setInputName(e.target.value)}
                   placeholder="John Doe"
-                  className="w-full px-3 py-3 border border-teal-600 rounded-none focus:outline-none focus:border-teal-700 text-gray-700 text-sm"
+                  className="w-full px-3 py-2 sm:py-3 border border-teal-600 rounded-none focus:outline-none focus:border-teal-700 text-gray-700 text-sm"
                   disabled={loading}
                 />
               </div>
@@ -203,7 +226,7 @@ const PatientLogin = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="eg. johndoe@example.com"
-                  className="w-full px-3 py-3 border border-teal-600 rounded-none focus:outline-none focus:border-teal-700 text-gray-700 text-sm"
+                  className="w-full px-3 py-2 sm:py-3 border border-teal-600 rounded-none focus:outline-none focus:border-teal-700 text-gray-700 text-sm"
                   disabled={loading}
                 />
               </div>
@@ -221,7 +244,7 @@ const PatientLogin = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 6 characters"
-                  className="w-full px-3 py-3 border border-teal-600 rounded-none focus:outline-none focus:border-teal-700 text-gray-700 text-sm"
+                  className="w-full px-3 py-2 sm:py-3 border border-teal-600 rounded-none focus:outline-none focus:border-teal-700 text-gray-700 text-sm"
                   disabled={loading}
                 />
                 <div className="text-right mt-1">
@@ -237,16 +260,26 @@ const PatientLogin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-teal-700 text-white py-3 hover:bg-teal-800 transition duration-200 font-medium text-sm relative z-20 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-teal-700 text-white py-2 sm:py-3 hover:bg-teal-800 transition duration-200 font-medium text-sm relative z-20 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Signing Up..." : "Sign Up"}
+              </button>
+
+              <button
+                onClick={() => navigate('/auth-enter-mobile', { state: { userType: 'patient' } })}
+                type="button"
+                disabled={loading}
+                className="w-full border border-gray-900 text-gray-700 py-2 sm:py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <icons.IoPhonePortraitOutline size={20} />
+                <span>Sign Up With Mobile</span>
               </button>
 
               <button
                 onClick={handleGoogleLogin}
                 type="button"
                 disabled={loading}
-                className="w-full border border-gray-900 text-gray-700 py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full border border-gray-900 text-gray-700 py-2 sm:py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <icons.FaGoogle size={20} />
                 <span>Sign Up With Google</span>
@@ -256,7 +289,7 @@ const PatientLogin = () => {
                 onClick={handleAppleLogin}
                 type="button"
                 disabled={loading}
-                className="w-full border border-gray-900 text-gray-700 py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full border border-gray-900 text-gray-700 py-2 sm:py-3 transition duration-200 font-medium text-sm flex items-center justify-center space-x-2 relative z-20 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <icons.FaApple size={24} />
                 <span>Sign Up with Apple ID</span>

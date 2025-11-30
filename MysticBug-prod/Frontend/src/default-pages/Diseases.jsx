@@ -85,7 +85,7 @@ const Diseases = () => {
   ]
 
   return (
-    <div className="px-4 sm:px-16 mt-[105px]">
+    <div className="px-4 sm:px-16 mt-[10px]">
       {diseasesData.map((disease) => (
         <div
           key={disease.id}

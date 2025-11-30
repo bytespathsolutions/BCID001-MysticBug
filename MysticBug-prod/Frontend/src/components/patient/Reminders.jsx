@@ -2,19 +2,16 @@ import { useNavigate } from "react-router-dom";
 import { images } from "../../assets/assets"
 import { useEffect, useState } from "react";
 const Reminders = ({ onClose }) => {
-  const navigate = useNavigate();
   const [appointments, setAppointments] = useState([])
   const BASE_URL = import.meta.env.VITE_API_BASE_URL
-
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/appointments/fetch-all-appointments`);
-        if (!res.ok) throw new Error("Failed to fetch");
+        const res = await fetch(`${BASE_URL}/appointments/fetch_all_appointments`);
         const data = await res.json();
-
-        setAppointments(data);
+        const filteredAppointment = data.filter((app) => app.status !== "rejected")
+        setAppointments(filteredAppointment);
       } catch (err) {
         console.error("fetchAppointments error:", err);
         setAppointments([]);
@@ -24,7 +21,7 @@ const Reminders = ({ onClose }) => {
   }, []);
   return (
     <div>
-      <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-[150]">
         <div className="bg-[#0a5b58] rounded-xl p-4 w-full max-w-6xl h-[96vh] relative">
           <div className="flex justify-between items-center mb-4">
             <div className="">

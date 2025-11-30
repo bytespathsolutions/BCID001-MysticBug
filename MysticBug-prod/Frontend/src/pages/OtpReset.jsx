@@ -48,21 +48,30 @@ const OtpReset = () => {
 
   const otpValue = otp.join("");
   return (
-    <div className='relative'>
+    <div className="relative h-screen overflow-hidden bg-gray-50">
+      {/* Top Clip */}
       <img
         src={images.upper_clip}
-        alt="clipImage"
-        className='absolute top-0 pointer-events-none' />
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-2xl text-center w-full space-y-6 mt-48 sm:px-28">
-          <div className="flex flex-col gap-2 items-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+        alt="clip"
+        className="absolute h-[80%] sm:h-auto top-0 sm:top-[-50px] min-w-full pointer-events-none"
+      />
+
+      {/* Main Content */}
+      <div className="flex h-full items-center justify-center px-4 sm:px-10">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full max-w-5xl">
+
+          {/* OTP Card */}
+          <div className="w-full md:w-1/2 text-center space-y-6">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
               ENTER OTP
             </h1>
-            <p className="text-gray-600 text-lg flex items-center text-center gap-2">
+
+            <p className="text-gray-600 text-lg">
               Enter the OTP sent to your Mobile Number
             </p>
-            <div className="flex items-center gap-2 mt-2 justify-center">
+
+            {/* OTP Inputs */}
+            <div className="flex items-center gap-3 justify-center mt-4">
               {otp.map((value, index) => (
                 <input
                   key={index}
@@ -74,21 +83,36 @@ const OtpReset = () => {
                   onChange={(e) => handleChange(e, index)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
                   onPaste={handlePaste}
-                  className="h-10 w-10 rounded bg-white border border-green-700 text-center text-lg font-semibold"
+                  className="h-12 w-12 sm:h-14 sm:w-14 rounded bg-white border border-green-700
+                   text-center text-xl font-semibold"
                 />
               ))}
             </div>
-            <button className='bg-[#0A4F5B] text-white w-full p-2 mt-2'>Log in</button>
+
+            {/* Button */}
+            <button className="bg-[#0A4F5B] text-white w-full md:w-64 px-4 py-3 rounded mt-4">
+              Log in
+            </button>
           </div>
+
+          {/* Right Image */}
+          <img
+            src={images.otp_man}
+            alt="otp illustration"
+            className="hidden sm:block w-48 sm:w-72 md:w-80 mb-8 md:mb-0"
+          />
         </div>
-        <img src={images.otp_man} alt="otp_man image" />
       </div>
+
+      {/* Bottom Clip */}
       <img
         src={images.lower_clip}
-        alt="clipImage"
-        className='absolute h-[800px] bottom-[-130px] w-full ml:200px pointer-events-none' />
+        alt="clip bottom"
+        className="absolute h-[90%] sm:h-auto bottom-0 sm:bottom-[-90px] w-full pointer-events-none"
+      />
     </div>
-  )
+  );
+
 }
 
 export default OtpReset

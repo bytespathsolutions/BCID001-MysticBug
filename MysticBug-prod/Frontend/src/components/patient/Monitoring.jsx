@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { images } from "../../assets/assets"
+import { useAuth } from "../../Context/AuthContext";
 
 const Monitoring = ({ onClose }) => {
   const [appointments, setAppointments] = useState([])
@@ -11,16 +12,16 @@ const Monitoring = ({ onClose }) => {
   const [submitting, setSubmitting] = useState(false)
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL
-
+  const { uid } = useAuth()
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/appointments/fetch-all-appointments`);
-        if (!res.ok) throw new Error("Failed to fetch");
+        const res = await fetch(`${BASE_URL}/appointments/fetch_all_appointments`);
         const data = await res.json();
-        setAppointments(data);
+        const filteredAppointments = data.filter((app) => app.status !== "rejected")
+        setAppointments(filteredAppointments);
         // Extract unique doctors from past appointments
-        const doctors = [...new Set(data.map(apt => apt.doctor).filter(Boolean))];
+        const doctors = [...new Set(data?.map(apt => apt.doctor).filter(Boolean))];
         setPreviousDoctors(doctors);
       } catch (err) {
         console.error("fetchAppointments error:", err);
@@ -31,12 +32,13 @@ const Monitoring = ({ onClose }) => {
 
     const fetchMedicalRecords = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/medical_records`);
+        const res = await fetch(`${BASE_URL}/medical_records/${uid}`);
         if (!res.ok) throw new Error("Failed to fetch medical records");
         const data = await res.json();
+        console.log("data is:", data)
         setMedicalRecords(data);
       } catch (err) {
-        console.log('medical record fetch fail', err)
+        console.log('medical record fetch fail', err.message)
       }
     }
     fetchMedicalRecords()
@@ -82,7 +84,7 @@ const Monitoring = ({ onClose }) => {
   }
   return (
     <div>
-      <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-[150]">
         <div className="bg-[#0a5b58] rounded-xl p-4 w-full max-w-6xl h-[96vh] relative overflow-auto">
           <div className="flex justify-between items-center mb-2">
             <div className="">

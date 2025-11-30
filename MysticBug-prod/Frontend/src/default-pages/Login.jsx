@@ -3,28 +3,27 @@ import { images } from '../assets/assets';
 
 const Login = () => {
   const navigate = useNavigate();
-
   const handleNavigate = (path, userType) => {
     navigate(path, { state: { userType } });
   };
 
   return (
-    <div className="relative h-screen flex flex-col justify-between bg-white overflow-hidden">
+    <div className="relative min-h-screen flex flex-col justify-between bg-white overflow-hidden">
       <img
         src={images.Clippath_group}
         alt="upper wave image"
-        className="absolute top-0 left-0 w-full object-cover min-h-[200px] z-0 pointer-events-none"
+        className="absolute sm:-top-10 left-0 w-full object-cover min-h-[450px] z-0 pointer-events-none"
       />
 
       {/* Center content */}
-      <div className="relative z-20 flex flex-col justify-center items-center flex-grow px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="font-bold font-merriweather text-3xl sm:text-5xl lg:text-6xl mb-3 mt-10">Log In</h1>
-          <p className="font-lato font-normal mb-6 sm:mb-8 text-sm sm:text-lg">
+      <div className="relative z-20 flex flex-col justify-center items-center flex-grow px-4 sm:px-6 lg:px-8 mb-[40px]">
+        <div className="text-center pt-16 sm:pt-0">
+          <h1 className="font-bold font-merriweather text-3xl sm:text-5xl lg:text-6xl mb-3">Log In</h1>
+          <p className="font-lato font-normal mb-3 text-sm sm:text-lg">
             Select login type before proceeding
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-10 max-w-5xl mx-auto">
             <div className="w-full">
               <div
                 role="button"
@@ -99,7 +98,7 @@ const Login = () => {
       <img
         src={images.Group}
         alt="bottom wave image"
-        className="absolute bottom-0 left-0 w-full min-h-[200px] object-cover z-0 pointer-events-none"
+        className="absolute -bottom-[10px] sm:bottom-[-80px] left-0 w-full min-h-[200px] object-cover z-0 pointer-events-none"
       />
     </div>
   );

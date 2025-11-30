@@ -15,17 +15,17 @@ import Reminders from "./patient/Reminders.png"
 import Monitoring from "./patient/Monitoring.png"
 import Medical_assistant from "./patient/Medical_assistant.png"
 import Admin from "./Admin/Admin.png"
-import { FaLeaf } from "react-icons/fa"
+import { FaLeaf, FaStar } from "react-icons/fa"
 import { FaGoogle } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
 
 
 import { FaRegClock } from "react-icons/fa";
-import { LuTablet } from "react-icons/lu";
+import { LuDelete, LuTablet } from "react-icons/lu";
 import { RiChatCheckLine } from "react-icons/ri";
 import { FaHandHoldingHeart } from "react-icons/fa";
-import { FiHome, FiThumbsDown, FiThumbsUp } from "react-icons/fi";
-import { BiBook } from "react-icons/bi";
+import { FiDelete, FiHome, FiThumbsDown, FiThumbsUp } from "react-icons/fi";
+import { BiBook, BiEdit } from "react-icons/bi";
 import bot from "../assets/homepage/bot.png"
 import redLight from "../assets/homepage/redLight.png"
 import DiseaseBanner7 from "../assets/homepage/DiseaseBanner7.png"
@@ -37,7 +37,7 @@ import Group1 from "../assets/homepage/Group_1.png"
 import homepage from "../assets/homepage/homepage.png"
 import { FaFacebook, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import calling_1 from "../assets/ContactPage/calling_1.png"
-import { MdOutlineMail } from "react-icons/md";
+import { MdDelete, MdOutlineMail } from "react-icons/md";
 import mail from "../assets/ContactPage/mail.png"
 import office from "../assets/ContactPage/office.png"
 import { CiLocationOn } from "react-icons/ci";
@@ -59,13 +59,63 @@ import DiseaseBanner06 from "../assets/Disease/DiseaseBanner06.png"
 import DiseaseBanner07 from "../assets/Disease/DiseaseBanner07.png"
 import DiseaseBanner08 from "../assets/Disease/DiseaseBanner08.png"
 import DiseaseBanner09 from "../assets/Disease/DiseaseBanner09.png"
+import female_doctor from "../assets/doctor/female_doctor.jpg"
+import male_doctor from "../assets/doctor/male_doctor.jpg"
+import female from "../assets/doctor/female.jpg"
+import alarm_bell from "../assets/doctor/alarm_bell.png"
 
-export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group, lower_clip, upper_clip, bottomWave, Appointments, Monitoring, Reminders, Medical_Records, Prescriptions, Medical_assistant, Admin, logo, }
+import { GoHome, GoHomeFill } from "react-icons/go";
+import { PiUsers } from "react-icons/pi";
+import { PiCalendarBold } from "react-icons/pi";
+import { AiOutlineFile } from "react-icons/ai";
+import { AiTwotoneMessage } from "react-icons/ai";
+import { RiTaskLine } from "react-icons/ri";
+import { FaArrowRight } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
+import { CiStar } from "react-icons/ci";
+import { FaSearch } from "react-icons/fa"
+import { IoIosArrowForward } from "react-icons/io";
+import { AiOutlineFileText } from "react-icons/ai";
+import { IoImageOutline } from "react-icons/io5";
+import { GrNotes } from "react-icons/gr";
+import { FaUserDoctor } from "react-icons/fa6";
+import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { LuMessageCircleMore } from "react-icons/lu";
+import { MdPayments } from "react-icons/md";
+import rounded_bot from "../assets/Homepage/rounded_bot.png"
+import loadinganim from "../assets/loadinganim.gif"
+import page404 from "../assets/page404.gif"
+import { IoPhonePortraitOutline } from "react-icons/io5";
+
+export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group, lower_clip, upper_clip, bottomWave, Appointments, Monitoring, Reminders, Medical_Records, Prescriptions, Medical_assistant, Admin, logo, female, male_doctor, female_doctor, alarm_bell, loadinganim, page404 }
 
 export const icons = {
   FaLeaf, FaGoogle, FaApple,
   FiThumbsUp,
-  FiThumbsDown
+  FiThumbsDown,
+  GoHomeFill,
+  PiUsers,
+  PiCalendarBold,
+  AiOutlineFile,
+  AiTwotoneMessage,
+  RiTaskLine,
+  FaStar,
+  FaArrowRight,
+  MdClose,
+  GoHome,
+  CiStar,
+  FaSearch,
+  IoIosArrowForward,
+  AiOutlineFileText,
+  IoImageOutline,
+  GrNotes,
+  FaUserDoctor,
+  HiOutlineCog6Tooth,
+  LuMessageCircleMore,
+  MdPayments,
+  BiEdit,
+  MdDelete,
+  IoPhonePortraitOutline
 }
 
 
@@ -87,5 +137,5 @@ export const default_page_icons = {
 export const default_page_images = {
   bot, redLight, DiseaseBanner7, Offer, logo, clip_path_group, calling_girl, repair_man, Group1, homepage
   ,
-  calling_1, mail, office, mobile, Who_are_we, clip_path_vertical, owner, terms, stones_left, stones_right, privacyPolicy, DiseaseBanner01, DiseaseBanner02, DiseaseBanner03, DiseaseBanner04, DiseaseBanner05, DiseaseBanner06, DiseaseBanner07, DiseaseBanner08, DiseaseBanner09
+  calling_1, mail, office, mobile, Who_are_we, clip_path_vertical, owner, terms, stones_left, stones_right, privacyPolicy, DiseaseBanner01, DiseaseBanner02, DiseaseBanner03, DiseaseBanner04, DiseaseBanner05, DiseaseBanner06, DiseaseBanner07, DiseaseBanner08, DiseaseBanner09, rounded_bot
 }

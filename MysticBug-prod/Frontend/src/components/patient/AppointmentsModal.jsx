@@ -3,7 +3,6 @@ import { images, icons } from "../../assets/assets";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAuth } from "../../Context/AuthContext";
-
 const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const hours = [
   "12 AM", "1 AM", "2 AM", "3 AM", "4 AM", "5 AM", "6 AM", "7 AM",
@@ -25,6 +24,7 @@ const AppointmentsModal = ({ onClose }) => {
 
   // Form state
   const [patientName, setPatientName] = useState("");
+  const [age, setAge] = useState("");
   const [reason, setReason] = useState("");
   const [doctor, setDoctor] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
@@ -45,7 +45,8 @@ const AppointmentsModal = ({ onClose }) => {
   const [userActions, setUserActions] = useState({});
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const { uid } = useAuth()
+  const { uid } = useAuth();
+
   // Helper to convert "8 AM" etc. to 24h number
   const to24Hour = (time) => {
     const [hour, meridian] = time.split(" ");
@@ -64,27 +65,6 @@ const AppointmentsModal = ({ onClose }) => {
       date.getDate() === today.getDate()
     );
   };
-
-  // Determine available hours based on selected date
-  const getAvailableHours = () => {
-    if (isToday(calendarStartDate)) {
-      const currentHour = new Date().getHours();
-      return hours.filter((time) => to24Hour(time) > currentHour);
-    }
-    return hours;
-  };
-
-  const availableHours = getAvailableHours();
-
-  // Update timeSlot when calendarStartDate changes
-  useEffect(() => {
-    const available = getAvailableHours();
-    if (available.length > 0) {
-      setTimeSlot(available[0]);
-    } else {
-      setTimeSlot("");
-    }
-  }, [calendarStartDate]);
 
   // Compute the week array based on selectedDate (Sunday-start)
   const getWeekDates = () => {
@@ -107,7 +87,6 @@ const AppointmentsModal = ({ onClose }) => {
         const start = formatDateYYYYMMDD(weekDates[0]);
         const end = formatDateYYYYMMDD(weekDates[6]);
         const res = await fetch(`${BASE_URL}/appointments?start=${start}&end=${end}`);
-        console.log(`sended dates with the api are:, ${start} ${end}`)//sending proper week dates
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setAppointments(data);
@@ -122,8 +101,8 @@ const AppointmentsModal = ({ onClose }) => {
     fetchAppointments();
   }, [selectedDate]);
 
-  const appointmentMap = appointments.reduce((acc, a) => {
-    // Convert MongoDB date to YYYY-MM-DD format
+  const filteredAppointment = appointments
+  const appointmentMap = filteredAppointment.reduce((acc, a) => {
     const appointmentDate = new Date(a.date);
     const dateKey = formatDateYYYYMMDD(appointmentDate);
     const key = `${dateKey}_${a.timeSlot}`;
@@ -132,6 +111,49 @@ const AppointmentsModal = ({ onClose }) => {
     acc[key].push(a);
     return acc;
   }, {});
+
+  // Determine available hours based on selected date
+  const getAvailableHours = () => {
+    if (isToday(calendarStartDate)) {
+      const currentHour = new Date().getHours();
+      return hours.filter((time) => to24Hour(time) > currentHour);
+    }
+    return hours;
+  };
+
+  const availableHours = getAvailableHours();
+
+  // Get available doctors for a specific time slot
+  const getAvailableDoctorsForSlot = (timeSlot) => {
+    const dateStr = formatDateYYYYMMDD(calendarStartDate);
+    const slotKey = `${dateStr}_${timeSlot}`;
+    const existingAppointments = appointmentMap[slotKey] || [];
+
+    // Get list of doctors who already have confirmed/pending appointments at this time
+    const bookedDoctors = existingAppointments
+      .filter(apt => apt.status === "confirmed" || apt.status === "pending")
+      .map(apt => apt.doctor);
+
+    // Return doctors who are NOT in the booked list
+    return doctorsData.filter(doc => !bookedDoctors.includes(doc.name));
+  };
+
+  // Check if a time slot is completely full (no doctors available)
+  const isTimeSlotFullyBooked = (timeSlot) => {
+    return getAvailableDoctorsForSlot(timeSlot).length === 0;
+  };
+
+  // Update timeSlot when calendarStartDate changes or appointments/doctors update
+  useEffect(() => {
+    const available = getAvailableHours();
+    // Find first slot that has available doctors
+    const firstAvailableSlot = available.find(slot => !isTimeSlotFullyBooked(slot));
+    if (firstAvailableSlot) {
+      setTimeSlot(firstAvailableSlot);
+    } else {
+      setTimeSlot(available[0] || "");
+    }
+  }, [calendarStartDate, appointments, doctorsData]);
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -142,12 +164,24 @@ const AppointmentsModal = ({ onClose }) => {
       return;
     }
 
+    // Check if the selected doctor is available at this time
+    const availableDoctors = getAvailableDoctorsForSlot(timeSlot);
+    const isDoctorAvailable = availableDoctors.some(doc => doc.name === doctor);
+
+    if (!isDoctorAvailable) {
+      alert(`Dr. ${doctor} is not available at ${timeSlot}. Please select a different time or doctor.`);
+      return;
+    }
+
     const payload = {
       patientName: patientName || "Anonymous",
+      age,
       reason,
       doctor,
       date: dateStr,
       timeSlot,
+      status: "pending",
+      patientId: uid
     };
 
     try {
@@ -156,7 +190,6 @@ const AppointmentsModal = ({ onClose }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err.message || "Failed to save");
@@ -169,9 +202,12 @@ const AppointmentsModal = ({ onClose }) => {
 
       // Reset form
       setPatientName("");
+      setAge("");
       setReason("");
       setDoctor("");
-      setTimeSlot(availableHours[0] || "");
+      const available = getAvailableHours();
+      const firstAvailableSlot = available.find(slot => !isTimeSlotFullyBooked(slot));
+      setTimeSlot(firstAvailableSlot || available[0] || "");
       setShowForm(false);
 
       alert("Appointment booked successfully!");
@@ -198,6 +234,7 @@ const AppointmentsModal = ({ onClose }) => {
     };
     fetchDoctors();
   }, []);
+
   useEffect(() => {
     if (showDoctorsPopup) {
       fetchAllDoctorRatings();
@@ -210,7 +247,6 @@ const AppointmentsModal = ({ onClose }) => {
       if (!res.ok) throw new Error("Failed to fetch ratings");
       const data = await res.json();
 
-      // Convert array to object for easy lookup
       const ratingsMap = {};
       data.ratings.forEach(r => {
         ratingsMap[r.doctor] = {
@@ -224,7 +260,6 @@ const AppointmentsModal = ({ onClose }) => {
     }
   };
 
-  // Fetch doctor reviews when review popup opens
   useEffect(() => {
     if (reviewPopup && selectedDoctorForReview) {
       fetchDoctorReviews(selectedDoctorForReview);
@@ -240,7 +275,6 @@ const AppointmentsModal = ({ onClose }) => {
 
       const data = await res.json();
       setDoctorReviews(data.reviews || []);
-      console.log("data:", data)
       setAverageRating(data.averageRating || 0);
       setTotalReviews(data.totalReviews || 0);
     } catch (err) {
@@ -253,7 +287,6 @@ const AppointmentsModal = ({ onClose }) => {
     }
   };
 
-  // Handle Like
   const handleLikes = async (reviewId) => {
     try {
       const res = await fetch(`${BASE_URL}/feedback/${reviewId}/like`, {
@@ -262,7 +295,6 @@ const AppointmentsModal = ({ onClose }) => {
         body: JSON.stringify({ userId: uid }),
       });
       const updated = await res.json();
-      // update frontend state
       setDoctorReviews((prev) =>
         prev.map((r) => (r._id === updated._id ? updated : r))
       );
@@ -271,7 +303,6 @@ const AppointmentsModal = ({ onClose }) => {
     }
   };
 
-  // Handle Dislike
   const handleDisLikes = async (reviewId) => {
     try {
       const res = await fetch(`${BASE_URL}/feedback/${reviewId}/dislike`, {
@@ -289,8 +320,8 @@ const AppointmentsModal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-[#0a5b58] rounded-xl p-4 w-full max-w-6xl h-[96vh] relative">
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-[150] p-4">
+      <div className="bg-[#0a5b58] rounded-xl p-4 w-full max-w-6xl h-[96vh] relative mt-0 sm:mt-0 md:mt-0 lg:mt-0">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-white text-xl font-semibold">Appointments</h2>
           <div className="space-x-4">
@@ -346,23 +377,36 @@ const AppointmentsModal = ({ onClose }) => {
                   return (
                     <div
                       key={`cell-${i}-${j}`}
-                      className={`border border-green-800 py-2 px-1 text-center ${isTodayCell ? "bg-green-900 text-white" : "bg-[#93d8c1]"
-                        }`}
-                      style={{ minHeight: 48 }}
+                      className={`border border-green-800 p-1 text-center ${isTodayCell ? "bg-green-900 text-white" : "bg-[#93d8c1]"}`}
+                      style={{ minHeight: 60, maxHeight: 60 }}
                     >
                       {cellAppointments.length === 0 ? (
                         <div className="h-full w-full">&nbsp;</div>
                       ) : (
-                        <div className="flex flex-col gap-1 items-start">
+                        <div className="flex flex-col gap-1 items-start h-full ">
                           {cellAppointments.map((a) => (
                             <div
                               key={a._id}
-                              className="w-full text-left rounded px-1 py-0.5 bg-white text-green-900 text-xs"
+                              className={`w-full overflow-y-auto text-left rounded px-1 py-0.5 ${a.status === "confirmed"
+                                ? "bg-purple-500 text-white"
+                                : a.status === "pending"
+                                  ? "bg-yellow-400 text-black"
+                                  : "bg-red-500 text-white"
+                                } text-xs`}
                             >
-                              <div className="font-semibold truncate">
-                                {a.patientName || "Anonymous"}
+                              <div className="font-semibold text-[10px]">
+                                {a.patientName}
                               </div>
-                              <div className="truncate">{a.reason}</div>
+                              <div className="text-[9px]">
+                                {a.reason},{" "}
+                                <span className="text-[8px] opacity-80">
+                                  {a.status === "pending"
+                                    ? "⏳"
+                                    : a.status === "confirmed"
+                                      ? "✓"
+                                      : "✗"}
+                                </span>
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -386,15 +430,24 @@ const AppointmentsModal = ({ onClose }) => {
             <h2 className="text-center text-2xl font-merriweather mb-1">
               Book <br /> Appointment
             </h2>
-            <form className="flex flex-col mt-2 gap-2" onSubmit={handleSave}>
+            <div className="flex flex-col mt-2 gap-1">
               <label className="text-xs">PATIENT NAME</label>
               <input
                 value={patientName}
                 onChange={(e) => setPatientName(e.target.value)}
                 type="text"
-                id="name"
                 className="p-1 rounded bg-[#8ccdb8] outline-none text-sm"
                 placeholder="Name (optional)"
+              />
+              <label className="text-xs">PATIENT AGE</label>
+              <input
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                type="number"
+                className="p-1 rounded bg-[#8ccdb8] outline-none text-sm"
+                placeholder="age"
+                min={1}
+                max={90}
               />
 
               <label className="text-xs">REASON</label>
@@ -402,18 +455,15 @@ const AppointmentsModal = ({ onClose }) => {
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 type="text"
-                id="reason"
                 className="p-1 rounded bg-[#8ccdb8] outline-none text-sm"
                 placeholder="e.g. Fever, Follow-up"
-                required
               />
 
               <label className="text-xs">DATE</label>
-              <DatePicker
-                selected={calendarStartDate}
-                onChange={(date) => setCalendarStartDate(date)}
-                dateFormat={"dd/MM/yyyy"}
-                minDate={new Date()}
+              <input
+                type="date"
+                value={calendarStartDate.toISOString().split('T')[0]}
+                onChange={(e) => setCalendarStartDate(new Date(e.target.value))}
                 className="w-full p-1 rounded bg-[#8ccdb8] outline-none text-sm"
               />
 
@@ -422,19 +472,11 @@ const AppointmentsModal = ({ onClose }) => {
                 value={timeSlot}
                 onChange={(e) => setTimeSlot(e.target.value)}
                 className="p-1 rounded bg-[#8ccdb8] outline-none text-sm"
-                required
               >
-                {availableHours.length > 0 ? (
-                  availableHours.map((h) => (
-                    <option key={h} value={h}>
-                      {h}
-                    </option>
-                  ))
-                ) : (
-                  <option value="" disabled>
-                    No slots available for today
-                  </option>
-                )}
+                <option value="">Select time</option>
+                {availableHours.map((h) => (
+                  <option key={h} value={h}>{h}</option>
+                ))}
               </select>
 
               <label className="text-xs">DOCTOR</label>
@@ -445,22 +487,20 @@ const AppointmentsModal = ({ onClose }) => {
                 readOnly
                 className="p-1 rounded bg-[#8ccdb8] mb-2 outline-none text-sm cursor-pointer"
                 placeholder="Select Doctor"
-                required
               />
               <button
-                type="submit"
+                onClick={handleSave}
                 className="rounded bg-[#0a4f5b] py-2 text-white"
                 disabled={loading}
               >
                 {loading ? "Saving..." : "SAVE DETAILS"}
               </button>
-            </form>
+            </div>
           </div>
         )}
 
-        {/* Doctors Popup */}
         {showDoctorsPopup && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-[200]">
             <div className="bg-[#d6f7ff] rounded-2xl w-full max-w-3xl p-4 h-[85vh] overflow-y-auto relative">
               <button
                 onClick={() => setShowDoctorsPopup(false)}
@@ -468,9 +508,15 @@ const AppointmentsModal = ({ onClose }) => {
               >
                 &times;
               </button>
+              <h2 className="text-xl font-bold text-[#0a5b58] mb-2">
+                Select Doctor for {timeSlot} on {calendarStartDate.toLocaleDateString()}
+              </h2>
+              <p className="text-sm text-gray-600 mb-4">
+                Showing available doctors for selected time slot
+              </p>
               <ul className="space-y-3">
-                {doctorsData.map((doctor, index) => {
-                  const realRating = doctorRatings[doctor.name];
+                {doctorsData.map((doc, index) => {
+                  const realRating = doctorRatings[doc.name];
                   const displayRating = realRating
                     ? `${realRating.averageRating} (${realRating.totalReviews} reviews)`
                     : "No ratings yet";
@@ -478,20 +524,22 @@ const AppointmentsModal = ({ onClose }) => {
                   return (
                     <li
                       key={index}
-                      className="p-3 rounded-xl flex justify-between items-center transition-all duration-200"
+                      className="p-3 rounded-xl flex justify-between items-center transition-all duration-200 bg-white"
                     >
                       <div className="flex items-center gap-4">
                         <img
-                          src={doctor.image || images.DefaultDoctor}
-                          alt={doctor.name}
+                          src={images.male_doctor}
+                          alt={doc.name}
                           className="w-[70px] h-[70px] rounded-full object-cover"
                         />
                         <div className="flex flex-col">
-                          <h1 className="font-medium text-black">{doctor.name}</h1>
-                          <p className="text-sm text-gray-500">{doctor.specialization}</p>
-                          <p className="text-sm text-gray-500">{doctor.qualification}</p>
+                          <h1 className="font-medium text-black">
+                            Dr. {doc.name}
+                          </h1>
+                          <p className="text-sm text-gray-500">{doc.specialization}</p>
+                          <p className="text-sm text-gray-500">{doc.qualification}</p>
                           <span className="text-xs text-gray-500">
-                            {doctor.experience}
+                            {doc.experience}
                           </span>
                           <span className="text-sm text-yellow-600 font-semibold">
                             ⭐ {displayRating}
@@ -502,7 +550,7 @@ const AppointmentsModal = ({ onClose }) => {
                         <button
                           className="bg-[#0a5b58] text-white px-3 py-1 rounded-md text-sm"
                           onClick={() => {
-                            setSelectedDoctorForReview(doctor.name);
+                            setSelectedDoctorForReview(doc.name);
                             setReviewPopup(true);
                             setShowDoctorsPopup(false);
                           }}
@@ -510,9 +558,9 @@ const AppointmentsModal = ({ onClose }) => {
                           REVIEWS
                         </button>
                         <button
-                          className="bg-[#0a5b58] text-white px-3 py-1 rounded-md text-sm"
+                          className="bg-[#0a5b58] text-white hover:bg-[#083d47] px-3 py-1 rounded-md text-sm"
                           onClick={() => {
-                            setDoctor(doctor.name);
+                            setDoctor(doc.name);
                             setShowDoctorsPopup(false);
                           }}
                         >
@@ -527,9 +575,8 @@ const AppointmentsModal = ({ onClose }) => {
           </div>
         )}
 
-        {/* Review Popup */}
         {reviewPopup && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 p-4">
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-[200] p-4">
             <div className="bg-[#d6f7ff] rounded-2xl w-full max-w-5xl h-[91vh] overflow-y-auto relative shadow-2xl">
               <div className="sticky top-0 bg-[#d6f7ff] z-10 p-6 pb-4 border-b border-[#b8e6f0]">
                 <div className="flex items-start justify-between mb-4">
@@ -650,18 +697,24 @@ const AppointmentsModal = ({ onClose }) => {
                               </div>
 
                               <div className="flex items-center gap-4 text-sm ml-4">
-                                <button className={`flex items-center gap-1 transition-colors ${userActions[review._id] === "like"
-                                  ? "text-[#0a5b58]"
-                                  : "text-gray-600 hover:text-[#0a5b58]"
-                                  }`}>
-                                  <icons.FiThumbsUp onClick={() => handleLikes(review._id)} />
+                                <button
+                                  className={`flex items-center gap-1 transition-colors ${userActions[review._id] === "like"
+                                    ? "text-[#0a5b58]"
+                                    : "text-gray-600 hover:text-[#0a5b58]"
+                                    }`}
+                                  onClick={() => handleLikes(review._id)}
+                                >
+                                  <icons.FiThumbsUp />
                                   <span className="font-medium">{review.likes || 0}</span>
                                 </button>
-                                <button className={`flex items-center gap-1 transition-colors ${userActions[review._id] === "dislike"
-                                  ? "text-red-600"
-                                  : "text-gray-600 hover:text-red-600"
-                                  }`}>
-                                  <icons.FiThumbsDown onClick={() => handleDisLikes(review._id)} />
+                                <button
+                                  className={`flex items-center gap-1 transition-colors ${userActions[review._id] === "dislike"
+                                    ? "text-red-600"
+                                    : "text-gray-600 hover:text-red-600"
+                                    }`}
+                                  onClick={() => handleDisLikes(review._id)}
+                                >
+                                  <icons.FiThumbsDown />
                                   <span className="font-medium">{review.disLikes || 0}</span>
                                 </button>
                               </div>

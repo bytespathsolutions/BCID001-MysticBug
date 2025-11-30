@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 const UploadMedicalRecords = () => {
@@ -8,9 +9,10 @@ const UploadMedicalRecords = () => {
   const [email, setEmail] = useState("");
   const [file, setFile] = useState(null);
   const navigate = useNavigate()
+  const { uid } = useAuth()
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("inside handler")
     if (!name || !email || !file) {
       alert("Please fill all required fields and upload a PDF file.");
       return;
@@ -20,13 +22,15 @@ const UploadMedicalRecords = () => {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("file", file);
+    console.log("inside formdata:", name, email, file)
 
     try {
-      const res = await fetch(`${BASE_URL}/medical_records`, {
+      console.log("inside try:", name, email, file)
+
+      const res = await fetch(`${BASE_URL}/medical_records/${uid}`, {
         method: "POST",
         body: formData,
       });
-
       if (!res.ok) throw new Error("Failed to upload record");
 
       const data = await res.json();
@@ -41,12 +45,12 @@ const UploadMedicalRecords = () => {
   };
 
   return (
-    <div className="bg-[#76b1c1] h-screen flex flex-col overflow-hidden">
+    <div className="bg-[#76b1c1] min-h-screen flex flex-col">
       <Navbar navBG={"#76b1c1"} searchBarColor={"#93ced8"} />
 
-      <div className="flex flex-1 justify-center items-center">
+      <div className="flex flex-1 justify-center items-center px-4">
         <div className="w-full max-w-2xl">
-          <h2 className="font-merriweather text-48 font-normal mb-4 text-center">
+          <h2 className="font-merriweather text-3xl sm:text-4xl font-normal mb-4 text-center">
             Upload Previous Medical Records
           </h2>
 
@@ -54,11 +58,11 @@ const UploadMedicalRecords = () => {
             onSubmit={handleSubmit}
             className="flex flex-col w-full max-w-lg mx-auto"
           >
-            <p className="text-18 font-lato font-normal mb-4 text-center">
+            <p className="text-base sm:text-lg font-lato font-normal mb-4 text-center">
               Upload your previous medical records in the below given fields
             </p>
 
-            <label htmlFor="name" className="mb-2">
+            <label htmlFor="name" className="mb-2 text-sm sm:text-base">
               Name*
             </label>
             <input
@@ -70,7 +74,7 @@ const UploadMedicalRecords = () => {
               required
             />
 
-            <label htmlFor="email" className="mb-2">
+            <label htmlFor="email" className="mb-2 text-sm sm:text-base">
               Email*
             </label>
             <input
@@ -82,7 +86,7 @@ const UploadMedicalRecords = () => {
               required
             />
 
-            <label htmlFor="file" className="mb-2">
+            <label htmlFor="file" className="mb-2 text-sm sm:text-base">
               Upload Scanned PDF*
             </label>
             <input
@@ -96,15 +100,16 @@ const UploadMedicalRecords = () => {
 
             <button
               type="submit"
-              className="bg-[#0a5b58] text-white p-2 rounded-lg hover:bg-[#094946] transition-all"
+              className="bg-[#0a5b58] text-white p-2 rounded-lg hover:bg-[#094946] transition-all text-base sm:text-lg"
             >
-              Save Details
+              Upload Details
             </button>
           </form>
         </div>
       </div>
     </div>
   );
+
 };
 
 export default UploadMedicalRecords;

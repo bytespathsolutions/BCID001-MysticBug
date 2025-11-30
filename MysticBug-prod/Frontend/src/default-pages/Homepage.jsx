@@ -2,6 +2,7 @@ import Banner from '../components/Banner'
 import { default_page_images } from '../assets/assets'
 import { default_page_icons } from "../assets/assets"
 import { useEffect, useState } from 'react'
+import Chatbot from '../components/Chatbot'
 const Homepage = () => {
   const diseasesData = [
     {
@@ -95,9 +96,13 @@ const Homepage = () => {
     return () => clearInterval(interval);
   }, [diseasesData.length]);
 
+  const handleSupportCall = () => {
+    window.location.href = "tel:number"
+  }
   return (
     <div>
       <Banner src={default_page_images.homepage} />
+      <Chatbot />
       {/* chatbot section */}
       <div className="px-4 sm:px-12 py-6 sm:py-8 relative">
         <div className="bg-gradient-to-r from-blue-100 to-white rounded-xl sm:rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 p-4 sm:p-6 md:p-8">
@@ -134,12 +139,8 @@ const Homepage = () => {
             </p>
           </div>
         </div>
-
-        <div className='absolute bottom-[-45px] right-10 z-50 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48'>
-          <img src={default_page_images.bot} alt="bot image" className='object-cover w-30 cursor-pointer' />
-        </div>
-
       </div>
+
       {/* medical emergency section */}
       <div className="px-4 sm:px-12 py-10 sm:py-8 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
 
@@ -161,6 +162,7 @@ const Homepage = () => {
             {/* Emergency Button */}
             <div className="relative bg-white p-2">
               <img
+                onClick={handleSupportCall}
                 src={default_page_images.redLight}
                 alt="Emergency red light"
                 className="bg-transparent w-65 h-65 sm:w-50 sm:h-50 lg:w-80 lg:h-80 rounded-full object-cover cursor-pointer relative z-20"
@@ -315,7 +317,7 @@ const Homepage = () => {
           <img
             src={default_page_images.clip_path_group}
             alt="center"
-            className="hidden md:block md:w-full h-full object-contain mt-[-170px]"
+            className="hidden md:block md: min-w-[1440px] w-full h-full object-contain mt-[-170px]"
           />
 
           <img
@@ -338,7 +340,7 @@ const Homepage = () => {
           </p>
         </div>
       </div>
-    </div >
+    </div>
   )
 }
 
