@@ -67,9 +67,57 @@ const App = () => {
     "/auth-enter-mobile"
   ];
 
+  // List all valid routes
+  const validRoutes = [
+    "/",
+    "/contactus",
+    "/aboutus",
+    "/terms",
+    "/privacy",
+    "/diseases",
+    "/login",
+    "/patient-login",
+    "/doctor-login",
+    "/investor-login",
+    "/admin-login",
+    "/forgot-password",
+    "/auth-enter-mobile",
+    "/auth-enter-otp",
+    "/patient-dashboard",
+    "/patient-dashboard/upload-medical-records",
+    "/patient-dashboard/messages",
+    "/patient/chat",
+    "/investor-dashboard",
+    "/doctor-dashboard",
+    "/doctor-dashboard/overview",
+    "/doctor-dashboard/doctor/messages",
+    "/doctor-dashboard/patients",
+    "/doctor-dashboard/appointments",
+    "/doctor-dashboard/tasks",
+    "/doctor-dashboard/patient",
+    "/admin-dashboard",
+    "/admin-dashboard/dashboard",
+    "/admin-dashboard/users",
+    "/admin-dashboard/doctors",
+    "/admin-dashboard/doctors/add_doctor",
+    "/admin-dashboard/appointments",
+    "/admin-dashboard/medical_histories",
+    "/admin-dashboard/payments",
+    "/admin-dashboard/chatbot_logs",
+    "/admin-dashboard/notifications",
+    "/admin-dashboard/patientList",
+    "/admin-dashboard/investors",
+    "/admin-dashboard/investors/add_investor",
+    "/admin-dashboard/system_settings"
+  ];
+
+  const isNotFoundPage = !validRoutes.some(route =>
+    location.pathname === route || location.pathname.startsWith(route + "/")
+  );
   const hideNavbar = hideBothPaths.some(path => location.pathname.startsWith(path));
   const hideFooter = hideBothPaths.some(path => location.pathname.startsWith(path)) ||
-    hideFooterPaths.some(path => location.pathname.startsWith(path));
+    hideFooterPaths.some(path => location.pathname.startsWith(path)) ||
+    isNotFoundPage;
 
   return (
     <div className="overflow-x-hidden min-h-screen">

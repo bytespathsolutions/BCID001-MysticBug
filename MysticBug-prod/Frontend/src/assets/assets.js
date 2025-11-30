@@ -84,7 +84,7 @@ import { LuMessageCircleMore } from "react-icons/lu";
 import { MdPayments } from "react-icons/md";
 import rounded_bot from "../assets/Homepage/rounded_bot.png"
 import loadinganim from "../assets/loadinganim.gif"
-import page404 from "../assets/page404.gif"
+import page404 from "../assets/page404.mp4"
 import { IoPhonePortraitOutline } from "react-icons/io5";
 
 export const images = { Clippath_group, Patient, Doctor, otp_man, Investor, Group, lower_clip, upper_clip, bottomWave, Appointments, Monitoring, Reminders, Medical_Records, Prescriptions, Medical_assistant, Admin, logo, female, male_doctor, female_doctor, alarm_bell, loadinganim, page404 }
